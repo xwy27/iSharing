@@ -9,6 +9,8 @@
   - [API](#api)
   - [iSharing FrontEnd](#isharing-frontend)
     - [Login & Signup](#login--signup)
+- [iSharing FrontEnd](#isharing-frontend-1)
+  - [Login & Signup](#login--signup-1)
 
 <!-- /TOC -->
 
@@ -139,6 +141,9 @@ MOSAD midterm project: 租赁服务平台
 ## iSharing FrontEnd
 
 ### Login & Signup
+# iSharing FrontEnd
+
+## Login & Signup
 
 1. **2018.5.9 Xwy**
     1. 登陆注册同页面
