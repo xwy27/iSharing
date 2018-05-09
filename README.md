@@ -3,10 +3,12 @@
 <!-- TOC -->
 
 - [iSharing](#isharing)
-    - [代码规范](#代码规范)
-    - [Design for Version 1.0](#design-for-version-10)
-    - [DDL](#ddl)
-    - [API](#api)
+  - [代码规范](#代码规范)
+  - [Design for Version 1.0](#design-for-version-10)
+  - [DDL](#ddl)
+  - [API](#api)
+  - [iSharing FrontEnd](#isharing-frontend)
+    - [Login & Signup](#login--signup)
 
 <!-- /TOC -->
 
@@ -133,3 +135,17 @@ MOSAD midterm project: 租赁服务平台
 1. 用户所有信息
 
 1. 物品信息
+
+## iSharing FrontEnd
+
+### Login & Signup
+
+1. **2018.5.9 Xwy**
+    1. 登陆注册同页面
+    1. 注册基础校验
+        - 手机号码长13位
+        - 手机号码必须以1开头
+        - 邮箱包含'@'字符
+    1. 个人信息页面
+        - 上传图片修改头像
+        - 修改个人信息数据
