@@ -3,21 +3,61 @@
 <!-- TOC -->
 
 - [iSharing](#isharing)
-    - [V1.0](#v10)
+    - [代码规范](#代码规范)
+    - [Design for Version 1.0](#design-for-version-10)
     - [DDL](#ddl)
     - [API](#api)
 
 <!-- /TOC -->
 
-MOSAD MID
+MOSAD midterm project: 租赁服务平台
 
-租赁服务平台
+## 代码规范
 
-xaml->localhost->response->xaml
+- 命名规范：
+    - 函数名：
+        - 先小后大驼峰式命名
+        - 动词开头，再接名词
+        - 例如：clickTab
+    - 变量名：
+        - 先小后大驼峰式命名
+        - 尽量使用名词
+        - 常量全字母大写
+        - 允许包含阿拉伯数字
+        - 例如：fileList
+    - 参数名：
+        - 同变量名
+- 缩进：
+    VSCode 下 google style 格式化文件
+- 注释：
+    - 变量注释：
+        - 变量头部使用行注释
+        - 例如：
+            ```cs
+            //文件名称
+            string fileName;
+            ```
+    - 函数注释：
+        - 函数头部使用区块注释
+            - 提供函数功能描述
+            - 提供参数类型及描述
+            - 提供返回值类型及描述，如果返回值不定，只提供文字描述
+        - 例如:
+            ```cs
+            /**
+             * 计算两个整数和
+             * @param  {int} lval 左操作数
+             * @param  {int} rval 右操作数
+             * @return {int} 两个整数和
+            */
+            int func(lval, rval) {
+                return lval + rval;
+            }
+            ```
 
-## V1.0
+## Design for Version 1.0
 
-1. 页面(navigation view)
+1. 页面(Navigation view)
     - 登陆/注册页面(Xwy)
         - Username
         - Password(encode)
@@ -54,7 +94,7 @@ xaml->localhost->response->xaml
         - 物品图片
         - 物品名称
         - 租赁价格
-1. Database(Xyq)
+1. Database(Xyq,Xwy)
     - 用户表单
         - userId(int primary key)
         - 头像(blob)
@@ -81,7 +121,7 @@ xaml->localhost->response->xaml
         userId(int, foreignkey)
         ItemId(int, foreignkey)
         time(string)-->
-1. Server(Xyq)
+1. Server(Xyq，Xwy)
 
 ## DDL
 
