@@ -1,13 +1,12 @@
 ﻿using System;
+using System.Diagnostics;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-// https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
-
 namespace iSharing {
   /// <summary>
-  /// 可用于自身或导航至 Frame 内部的空白页。
+  /// 登陆注册页面。
   /// </summary>
   public sealed partial class MainPage : Page {
     public MainPage () {
@@ -70,7 +69,11 @@ namespace iSharing {
      */
     private void LogIn (object sender, RoutedEventArgs e) {
       // post
-      Frame.Navigate (typeof (MyInfo));
+      try {
+        Frame.Navigate (typeof (MyInfo), "");
+      } catch (Exception ex) {
+        Debug.WriteLine (ex.Message + ex.StackTrace);
+      }
     }
 
     /**
