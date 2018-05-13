@@ -58,7 +58,7 @@ User.get = function (userid, callback) {
   });
 };
 
-// callback format: err
+// callback format: err, errmsg
 User.prototype.update = function(callback) {
 
   db.getConnection((err, connection) => {
@@ -71,9 +71,14 @@ User.prototype.update = function(callback) {
                       (err, results, fields) => {
       connection.release();
       if (err) {
-        return callback(err);
+        return callback(null, {
+          error: true,
+          errorMsg: err
+        });
       }
-      callback(null);
+      callback(null, {
+        error: false
+      });
     });
   });
 
