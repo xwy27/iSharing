@@ -3,24 +3,27 @@ var mysql = require('mysql');
 var pool = mysql.createPool({
   connectionLimit : 10,
   host      : 'localhost',
-  user      : 'host',
+  user      : 'root',
   password  : '',
   database  : 'MOSAD_MIDTERM_DB'
 }); // Establish Pooling Connections
 
 pool.getConnection((err, connection) => {
+  if (err) {
+    return console.error(err);
+  }
   connection.query('create table if not exists User' +
-                    '(userid INTEGER AUTO_INCREMENT,' +
-                    'username VARCHAR(30) not null unique,' + 
+                    '(username VARCHAR(30) not null unique,' + 
                     'password VARCHAR(20) not null,' +
                     'email VARCHAR(50),' + 
                     'tel VARCHAR(11),' +
-                    'communication VARCHAR(30),' +
-                    'icon MEDIUMBLOB,' +
-                    'primary key (userid))' ,(err, results, fields) => {
+                    'wechat VARCHAR(30),' +
+                    'qq VARCHAR(20),' +
+                    'icon TEXT,' +
+                    'primary key (username))' ,(err, results, fields) => {
     connection.release();
     if (err) {
-      console.error('Error creating tables: ' + err.stack);
+      console.error('Error creating tables:\n' + err.stack);
     }
   });
 });

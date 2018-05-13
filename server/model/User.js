@@ -12,7 +12,7 @@ function User(user) {
 
 module.exports = User;
 
-// callback format: err, userid
+// callback format: err, errmsg
 User.prototype.save = function(callback) {
 
   db.getConnection((err, connection) => {
@@ -20,21 +20,27 @@ User.prototype.save = function(callback) {
       return callback(err);
     }
 
-    connection.query('insert into User (username, password, email, tel, userid, communication, icon)' + 
+    connection.query('insert into User (username, password, email, tel, qq, wechat, icon)' + 
                       'values (?, ?, ?, ?, ?, ?, ?)', 
-                      [username, password, email, tel, userid, communication, icon],
+                      [username, password, email, tel, qq, wechat, icon],
                       (err, results, fields) => {
       connection.release();
       if (err) {
-        return callback(err);
+        console.error(err);
+        return callback(null, {
+          error: true,
+          errorMsg: '用户名重复'
+        });
       }
-      callback(null, results.insertId);
+      callback(null, {
+        error: false
+      });
     });
   });
 
 };
 
-// callback format: err, user
+// callback format: err, results
 User.get = function (userid, callback) {
   db.getConnection((err, connection) => {
     if (err) {

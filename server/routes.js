@@ -8,34 +8,35 @@ module.exports = function(app) {
     
     var body = req.body;
     
-    var username = body.username,
-      password = body.password,
-      email = body.email,
-      tel = body.tel,
-      communication = body.communication,
-      icon = body.icon;
+    var username = body.user.username,
+      password = body.user.password,
+      email = body.user.email,
+      tel = body.user.tel,
+      qq = null,
+      wechat = null,
+      icon = null;
 
     var newUser = new User({
       username: username,
       password: password,
       email: email,
       tel: tel,
-      communication: communication,
-      icon: icon,
-      userid: null
+      qq: qq,
+      wechat: wechat,
+      icon: icon
     });
 
-    newUser.save((err, userid) => {
+    newUser.save((err, msg) => {
       if (err) {
         res.status(500).end();
         console.error(err);
         return;
       }
 
-      console.log(userid);
       req.status(200).json({
         user: {
-          userid: userid
+          status: msg.error ? 'error' : 'success',
+          errorMsg: msg.errorMsg
         }
       }).end();
       return;
@@ -45,22 +46,35 @@ module.exports = function(app) {
   app.post('/user_get', (req, res) => {
     var body = req.body;
 
-    var userid = body.userid;
+    var username = body.username;
 
-    User.get(userid, (err, user) => {
+    User.get(username, (err, users) => {
       if (err) {
         res.status(500).end();
         console.error(err);
         return;
       }
 
-      console.log(user.userid);
       req.status(200).json({
         user: {
-
+            username: users[0].username,
+            password: users[0].password,
+            email: users[0].email,
+            tel: users[0].tel,
+            qq: users[0].qq,
+            wechat: users[0].wechat,
+            icon: users[0].icon
         }
       }).end();
       return;
     });
+  });
+
+  app.post('/user_login', (req, res) => {
+
+  });
+
+  app.post('/user_update', (req, res) => {
+    
   });
 }
