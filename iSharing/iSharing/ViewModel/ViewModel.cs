@@ -42,6 +42,7 @@ namespace iSharing.ViewModel {
     private UserViewModel () {
       try {
         this.User.Add (new User ("Test", "Test", "123@qq.com", "12345678901", originPhoto));
+        currentUser = User[0];
       } catch (Exception ex) {
         Debug.WriteLine (ex.Message + ex.StackTrace);
       }
