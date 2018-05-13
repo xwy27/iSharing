@@ -98,13 +98,13 @@ MOSAD midterm project: 租赁服务平台
         - 租赁价格
 1. Database(Xyq,Xwy)
     - 用户表单
-        - 头像(blob)
+        - 头像(url) maxlength: 60000+
         - Username(string unique) maxlength: 30
         - Password(string) maxlength: 20
         - E-mail(string) maxlength: 50
         - Tel(string) maxlength: 11
         - qq(string) maxlength: 20
-        - wechat(string) maxlength:  
+        - wechat(string) maxlength: 30 
     - 物品表单
         - userId(int, foreignkey)
         - ItemId(int, primarykey)
