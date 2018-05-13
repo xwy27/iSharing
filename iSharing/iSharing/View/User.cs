@@ -14,6 +14,9 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace iSharing.Models {
   public class User : INotifyPropertyChanged {
+    // 用户头像Url
+    private string photoUrl;
+
     // 用户头像
     private BitmapImage photo;
 
@@ -90,6 +93,15 @@ namespace iSharing.Models {
       set {
         this.qq = value;
         this.NotifyPropertyChanged ("QQ");
+      }
+    }
+
+    // 头像Url接口
+    public string PhotoUrl {
+      get { return this.photoUrl; }
+      set {
+        this.photoUrl = value;
+        this.NotifyPropertyChanged("PhotoUrl");
       }
     }
 
