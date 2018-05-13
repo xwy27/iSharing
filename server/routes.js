@@ -49,7 +49,7 @@ module.exports = function (app) {
   app.post('/user_get', (req, res) => {
     var body = req.body;
 
-    var username = body.username;
+    var username = body.user.username;
 
     User.get(username, (err, users) => {
       if (err) {
@@ -162,17 +162,17 @@ module.exports = function (app) {
   });
 
   /* Item */
-  app.post('/item_save', (req, res) => {
+  app.post('/item_add', (req, res) => {
     var body = req.body;
 
     var newItem = Item({
-      username: body.username,
+      username: body.item.username,
       itemid: null,
-      itemname: body.itemname,
-      price: body.price,
-      description: body.description,
-      leasetimes: body.leasetimes,
-      icon: body.icon
+      itemname: body.item.itemname,
+      price: body.item.price,
+      description: body.item.description,
+      leasetimes: body.item.leasetimes,
+      icon: body.item.icon
     });
 
     newItem.save((err, errorMsg)=> {
@@ -194,13 +194,13 @@ module.exports = function (app) {
     var body = req.body;
 
     var newItem = Item({
-      username: body.username,
-      itemid: body.itemid,
-      itemname: body.itemname,
-      price: body.price,
-      description: body.description,
-      leasetimes: body.leasetimes,
-      icon: body.icon
+      username: body.item.username,
+      itemid: body.item.itemid,
+      itemname: body.item.itemname,
+      price: body.item.price,
+      description: body.item.description,
+      leasetimes: body.item.leasetimes,
+      icon: body.item.icon
     });
 
     newItem.update((err, errorMsg)=> {
@@ -221,7 +221,7 @@ module.exports = function (app) {
   app.post('/item_getone', (req, res) => {
     var body = req.body;
 
-    var itemid = body.itemid;
+    var itemid = body.item.itemid;
 
     Item.get(itemid, (err, items) => {
       if (err) {
@@ -268,7 +268,7 @@ module.exports = function (app) {
     var body = req.body;
 
     var pageNumber = body.pageNumber,
-      username = body.username;
+      username = body.item.username;
 
     Item.getOnesList(username, pageNumber, (err, items) => {
       if (err) {
@@ -288,7 +288,7 @@ module.exports = function (app) {
     var body = req.body;
 
     var pageNumber = body.pageNumber,
-      itemname = body.itemname;
+      itemname = body.item.itemname;
 
     Item.getOnesList(itemname, pageNumber, (err, items) => {
       if (err) {

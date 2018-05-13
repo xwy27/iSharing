@@ -64,8 +64,8 @@ Item.prototype.update = (callback) => {
       return callback(err);
     }
 
-    connection.query('update Item set username=?, itemname=?, price=?, tel=?, description=?, icon=? , leasetimes=?, where itemid=?',
-      [username, itemname, price, tel, description, icon, leasetimes, itemid],
+    connection.query('update Item set username=?, itemname=?, price=?, description=?, icon=? , leasetimes=?, where itemid=?',
+      [username, itemname, price, description, icon, leasetimes, itemid],
       (err, results, fields) => {
         connection.release();
         if (err) {
