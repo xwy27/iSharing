@@ -3,12 +3,12 @@
 <!-- TOC -->
 
 - [iSharing](#isharing)
-  - [代码规范](#代码规范)
-  - [Design for Version 1.0](#design-for-version-10)
-  - [DDL](#ddl)
-  - [API](#api)
-  - [iSharing FrontEnd](#isharing-frontend)
-    - [Login & Signup](#login--signup)
+    - [代码规范](#)
+    - [Design for Version 1.0](#design-for-version-10)
+    - [DDL](#ddl)
+    - [API](#api)
+    - [iSharing FrontEnd](#isharing-frontend)
+        - [Login & Signup](#login-signup)
 
 <!-- /TOC -->
 
@@ -132,7 +132,111 @@ MOSAD midterm project: 租赁服务平台
 
 ## API
 
-1. 用户所有信息
+1. 图片上传
+
+    url: localhost:8000/image_load
+    
+    response：
+    
+    ```js
+    {
+        statue: 'success',
+        url: 'localhost:8000/public/2147813828.png'
+    }
+    ```
+
+1. 用户注册
+
+    url: localhost:8000
+
+    request:
+
+    ```js
+    {
+        user: {
+            username: '123',
+            password: '123',
+            email: '1@1.1',
+            tel: '12345678901'
+        }
+    }
+    ```
+
+    response:
+
+    ```js
+    {
+        status: 'success',
+        errorMsg: null
+    }
+
+    {
+        status: 'error',
+        errorMsg: '用户名重复'
+    }
+    ```
+
+1. 获取用户的信息
+
+    url: locaohost:8000/user_get
+    
+    request:
+
+    ```js
+    {
+        username: '123'
+    }
+    ```
+
+    response:
+    
+    ```js
+    {
+        user: {
+            username: '123',
+            password: '123',
+            email: '1@1.1',
+            tel: '12345678901',
+            qq: '123456',
+            wechat: '?',
+            icon: 'localhost:8000/public/2147813828.png'
+        }
+    }
+    ```
+
+1. 更新用户信息
+
+    url: localhost:8000/user_update
+
+    request:
+
+    ```js
+    {
+        user: {
+            username: '123',
+            password: '123',
+            email: '1@1.1',
+            tel: '12345678901',
+            qq: '123456',
+            wechat: '?',
+            icon: 'localhost:8000/public/2147813828.png'
+        }
+    }
+    ```
+
+    response:
+
+    ```js
+    {
+        status: 'success',
+        errorMsg: null
+    }
+
+    {
+        status: 'error',
+        errorMsg: 'Opps'
+    }
+    ```
 
 1. 物品信息
 
