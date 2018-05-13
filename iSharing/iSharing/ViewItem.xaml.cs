@@ -29,5 +29,12 @@ namespace iSharing
         {
             this.InitializeComponent();
         }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ItemDetail.Visibility = Visibility.Visible;
+            ItemList.Visibility = Visibility.Collapsed;
+            itemViewModel.SelectIndex = list.Items.IndexOf(e.ClickedItem);
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace iSharing.ViewModel
         {
             try
             {
-                this.observableItemCollection.Add(new Item("Test", 6.6f, "testing", new BitmapImage(), "testing"));
+                this.observableItemCollection.Add(new Item("Test", 6.6f, "testing", new BitmapImage(new Uri("ms-appx:///Assets/photo.jpg")), "testing"));
             }
             catch (Exception ex)
             {
@@ -92,6 +92,7 @@ namespace iSharing.ViewModel
             }
         }
 
+        //更新物品
         public void On_Update(Object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != "SelectItem")
