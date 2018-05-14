@@ -163,7 +163,7 @@ module.exports = function (app) {
   app.post('/item_add', (req, res) => {
     var body = req.body;
 
-    var newItem = Item({
+    var newItem = new Item({
       username: body.item.username,
       itemid: null,
       itemname: body.item.itemname,
@@ -173,6 +173,8 @@ module.exports = function (app) {
       icon: body.item.icon
     });
 
+    console.log(newItem);
+
     newItem.save((err, errorMsg)=> {
       if (err) {
         res.status(500).end();
@@ -181,8 +183,8 @@ module.exports = function (app) {
       }
 
       res.status(200).json({
-        status: msg.error ? 'error' : 'success',
-        errorMsg: msg.errorMsg
+        status: errorMsg.error ? 'error' : 'success',
+        errorMsg: errorMsg.errorMsg
       }).end();
       return;
     });
@@ -191,7 +193,7 @@ module.exports = function (app) {
   app.post('/item_update', (req, res) => {
     var body = req.body;
 
-    var newItem = Item({
+    var newItem = new Item({
       username: body.item.username,
       itemid: body.item.itemid,
       itemname: body.item.itemname,
@@ -209,8 +211,8 @@ module.exports = function (app) {
       }
 
       res.status(200).json({
-        status: msg.error ? 'error' : 'success',
-        errorMsg: msg.errorMsg
+        status: errorMsg.error ? 'error' : 'success',
+        errorMsg: errorMsg.errorMsg
       }).end();
       return;
     });
@@ -221,7 +223,7 @@ module.exports = function (app) {
 
     var itemid = body.item.itemid;
 
-    Item.get(itemid, (err, items) => {
+    Item.getOne(itemid, (err, items) => {
       if (err) {
         res.status(500).end();
         console.error(err);
@@ -248,7 +250,7 @@ module.exports = function (app) {
 
     var pageNumber = body.pageNumber;
 
-    Item.get(pageNumber, (err, items) => {
+    Item.getList(pageNumber, (err, items) => {
       if (err) {
         res.status(500).end();
         console.error(err);
@@ -266,7 +268,7 @@ module.exports = function (app) {
     var body = req.body;
 
     var pageNumber = body.pageNumber,
-      username = body.item.username;
+      username = body.user.username;
 
     Item.getOnesList(username, pageNumber, (err, items) => {
       if (err) {
@@ -288,7 +290,7 @@ module.exports = function (app) {
     var pageNumber = body.pageNumber,
       itemname = body.item.itemname;
 
-    Item.getOnesList(itemname, pageNumber, (err, items) => {
+    Item.findList(itemname, pageNumber, (err, items) => {
       if (err) {
         res.status(500).end();
         console.error(err);
