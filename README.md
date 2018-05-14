@@ -16,6 +16,7 @@ npm install
 然后即可启动服务器：
 
 ```bash
+mysql.server start
 node server.js
 ```
 

@@ -1,6 +1,5 @@
 var User = require('./model/User'),
-  Item = require('./model/Item'),
-  Lease = require('./model/Lease');
+  Item = require('./model/Item');
 var fs = require('fs');
 var multer = require('multer');
 var upload = multer({ dest: 'public/temp/' })
