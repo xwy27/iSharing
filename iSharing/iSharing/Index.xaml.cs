@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Linq;
 using System.Diagnostics;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -11,8 +9,8 @@ namespace iSharing {
   /// <summary>
   /// 登陆注册页面。
   /// </summary>
-  public sealed partial class MainPage : Page {
-    public MainPage () {
+  public sealed partial class IndexPage : Page {
+    public IndexPage () {
       this.InitializeComponent ();
     }
 
@@ -86,7 +84,7 @@ namespace iSharing {
           + "\"email\":\"" + email + "\"," + "\"tel\":\"" + tel + "\"}";
         JObject signupJson = JObject.Parse(jsonString);
         // post
-        Frame.Navigate (typeof (MyInfo));
+        Frame.Navigate (typeof (MainPage));
       }
     }
 
@@ -100,7 +98,7 @@ namespace iSharing {
       JObject loginJson = JObject.Parse(jsonString);
       // post
       try {
-        Frame.Navigate (typeof (MyInfo), "");
+        Frame.Navigate (typeof (MainPage));
       } catch (Exception ex) {
         Debug.WriteLine (ex.Message + ex.StackTrace);
       }
