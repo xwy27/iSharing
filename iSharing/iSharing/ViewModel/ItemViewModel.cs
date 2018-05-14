@@ -22,22 +22,19 @@ namespace iSharing.ViewModel {
       return instance ?? (instance = new ItemViewModel());
     }
 
-        /**
-        * 构造函数
-        * 测试：使用静态数据构造
-        * 上线：使用服务器返回数据构造
-        */
-        private ItemViewModel()
-        {
-            try
-            {
-                this.observableItemCollection.Add(new Item("Test", 6.6f, "testing", new BitmapImage(new Uri("ms-appx:///Assets/photo.jpg")), "testing"));
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message + ex.StackTrace);
-            }
-        }
+    /**
+    * 构造函数
+    * 测试：使用静态数据构造
+    * 上线：使用服务器返回数据构造
+    */
+    private ItemViewModel() {
+      try {
+        this.observableItemCollection.Add(new Item("Test", 6.6f, "testing", new BitmapImage(new Uri("ms-appx:///Assets/photo.jpg")), "testing"));
+      }
+      catch (Exception ex) {
+        Debug.WriteLine(ex.Message + ex.StackTrace);
+      }
+    }
 
     //可更新物品数据模型集合
     ObservableCollection<Item> observableItemCollection = new ObservableCollection<Item>();
@@ -77,21 +74,10 @@ namespace iSharing.ViewModel {
       }
     }
 
-<<<<<<< HEAD
     public void On_Update(Object sender, PropertyChangedEventArgs e) {
       if (e.PropertyName != "SelectItem") {
 
       }
-=======
-        //更新物品
-        public void On_Update(Object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName != "SelectItem")
-            {
-                
-            }
-        }
->>>>>>> d31160e0828241cd436c176a647fb42bf38a2ac1
     }
   }
 }

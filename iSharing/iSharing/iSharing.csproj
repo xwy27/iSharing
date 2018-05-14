@@ -110,8 +110,8 @@
     </Compile>
     <Compile Include="ViewModel\ItemViewModel.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
-    <Compile Include="View\Item.cs" />
-    <Compile Include="View\User.cs" />
+    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

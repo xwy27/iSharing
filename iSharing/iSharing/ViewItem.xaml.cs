@@ -31,6 +31,7 @@ namespace iSharing {
       ItemDetail.Visibility = Visibility.Visible;
       ItemList.Visibility = Visibility.Collapsed;
       itemViewModel.SelectIndex = list.Items.IndexOf (e.ClickedItem);
+      itemViewModel.SelectItem = itemViewModel.Items[itemViewModel.SelectIndex];
     }
   }
 }
