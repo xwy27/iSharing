@@ -109,9 +109,9 @@ module.exports = function (app) {
       password = body.user.password,
       email = body.user.email,
       tel = body.user.tel,
-      qq = null,
-      wechat = null,
-      icon = null;
+      qq = body.user.qq,
+      wechat = body.user.wechat,
+      icon = body.user.icon;
 
     var newUser = new User({
       username: username,
@@ -141,8 +141,10 @@ module.exports = function (app) {
   /* Image */
   app.post('/image_upload', upload.any(), (req, res) => {
     console.log(req.files);
-    var temp_path = req.files.file.path;
-    var taget_path = './public/Images/' + Date.now() + req.files.file.name;
+    var originalname = req.files[0].originalname;
+    var temp_path = req.files[0].path;
+    var newname = req.files[0].filename + originalname.substring(originalname.lastIndexOf('.'));
+    var taget_path = './public/Images/'+ newname;
 
     fs.rename(temp_path, taget_path, (err) => {
       if (err) {
@@ -150,16 +152,10 @@ module.exports = function (app) {
         return console.error(err);
       }
 
-      fs.unlink(temp_path, (err) => {
-        if (err) {
-          res.status(500).end();
-          return console.log(Err);
-        }
-        res.status(200).json({
-          status: 'success',
-          url: 'localhost:8000/Images/' + req.files.file.name
-        }).end();
-      });
+      res.status(200).json({
+        status: 'success',
+        url: 'localhost:8000/Images/' + newname
+      }).end();
     });
   });
 

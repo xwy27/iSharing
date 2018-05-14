@@ -1,25 +1,4 @@
 var db = require('./db');
-
-db.getConnection((err, connection) => {
-  if (err) {
-    return console.error(err);
-  }
-  connection.query('create table if not exists User' +
-    '(username VARCHAR(30) not null unique,' +
-    'password VARCHAR(20) not null,' +
-    'email VARCHAR(50),' +
-    'tel VARCHAR(11),' +
-    'wechat VARCHAR(30),' +
-    'qq VARCHAR(20),' +
-    'icon TEXT,' +
-    'primary key (username))', (err, results, fields) => {
-      connection.release();
-      if (err) {
-        console.error('Error creating tables:\n' + err.stack);
-      }
-    });
-});
-
 /**
  * User 的构造函数
  * @param {struct} user

@@ -15,7 +15,7 @@ $(function () {
         data: fm,
         url: OL_Action_Root + action.value,
         dataType: 'json',
-        contentType: 'multipart/form-data',
+        contentType: false,
         processData: false,
         cache: false,
         timeout: 5000,

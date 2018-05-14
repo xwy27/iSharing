@@ -1,26 +1,5 @@
 var db = require('./db');
 
-db.getConnection((err, connection) => {
-  if (err) {
-    return console.error(err);
-  }
-  connection.query('create table if not exists Item' +
-    '(username VARCHAR(30) not null,' +
-    'itemid INTEGER not null AUTO_INCREMENT,' +
-    'itemname VARCHAR(100),' +
-    'price FLOAT,' +
-    'description TEXT,' +
-    'leasetimes INTEGER,' +
-    'icon TEXT,' +
-    'primary key (itemid),' +
-    'FOREIGN KEY (username) REFERENCES User (username) ON DELETE CASCADE)', (err, results, fields) => {
-      connection.release();
-      if (err) {
-        console.error('Error creating tables:\n' + err.stack);
-      }
-    });
-});
-
 module.exports = Item;
 
 function Item (item) {
