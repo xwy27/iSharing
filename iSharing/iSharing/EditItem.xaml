@@ -1,0 +1,40 @@
+﻿<Page
+  x:Class="iSharing.EditItem"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:local="using:iSharing"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  mc:Ignorable="d">
+
+  <Page.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="ms-appx:///Style.xaml"></ResourceDictionary>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Page.Resources>
+  
+  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+      <ColumnDefinition Width="400"></ColumnDefinition>
+      <ColumnDefinition Width="*"></ColumnDefinition>
+    </Grid.ColumnDefinitions>
+
+    <Grid Grid.Column="1">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="100" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <TextBlock Text="添加物品"  Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+      <RelativePanel Grid.Row="1" >
+        <TextBox x:Name="Itemname" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Height="30" Width="300" Margin="20" PlaceholderText="物品名称" />
+        <Image x:Name="Picture" RelativePanel.Below="Itemname" RelativePanel.AlignHorizontalCenterWithPanel="True" Source="/Assets/photo.jpg" Height="200" Width="300" Margin="20" />
+        <AppBarButton x:Name="Pick" RelativePanel.Below="Picture" RelativePanel.AlignRightWith="Picture" Icon="Pictures" Width="50" Height="50" Margin="20 0" Click="Pick_Click"/>
+        <TextBox x:Name="Description" RelativePanel.Below="Pick" RelativePanel.AlignHorizontalCenterWithPanel="True" Height="300" Width="300" Margin="20" PlaceholderText="物品介绍" />
+        <Button x:Name="Submit" Content="提交"  RelativePanel.Below="Description" RelativePanel.AlignHorizontalCenterWithPanel="True" Width="300" Margin="20" Click="Submit_Click"/>
+      </RelativePanel>
+    </Grid>
+  </Grid>
+</Page>

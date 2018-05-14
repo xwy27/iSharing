@@ -1,9 +1,9 @@
-﻿using iSharing.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using iSharing.ViewModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -16,18 +16,21 @@ using Windows.UI.Xaml.Navigation;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
-namespace iSharing
-{
-    /// <summary>
-    /// 可用于自身或导航至 Frame 内部的空白页。
-    /// </summary>
-    public sealed partial class ViewItem : Page
-    {
-        private ItemViewModel itemViewModel = ItemViewModel.GetInstance();
+namespace iSharing {
+  /// <summary>
+  /// 可用于自身或导航至 Frame 内部的空白页。
+  /// </summary>
+  public sealed partial class ViewItem : Page {
+    private ItemViewModel itemViewModel = ItemViewModel.GetInstance ();
 
-        public ViewItem()
-        {
-            this.InitializeComponent();
-        }
+    public ViewItem () {
+      this.InitializeComponent ();
     }
+
+    private void ListView_ItemClick (object sender, ItemClickEventArgs e) {
+      ItemDetail.Visibility = Visibility.Visible;
+      ItemList.Visibility = Visibility.Collapsed;
+      itemViewModel.SelectIndex = list.Items.IndexOf (e.ClickedItem);
+    }
+  }
 }

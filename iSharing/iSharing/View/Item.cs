@@ -83,27 +83,29 @@ namespace iSharing.Models {
       }
     }
 
-    /**
-    * 构造函数，根据给定数据构造用户
-    * @param {string} password 密码
-    * @param {string} mail 邮箱
-    * @param {string} phone 电话
-    * @param {BitmapImage} photo 头像
-    * @param {string} wechat 微信号，可为空
-    * @param {string} qq qq号，可为空
-    */
-    public Item(string itemname, float price, string description, BitmapImage picture,
-        string provider) {
-      try {
-        this.itemname = itemname;
-        this.price = price;
-        this.description = description;
-        this.picture = picture;
-        this.provider = provider;
-      }
-      catch (Exception ex) {
-        Debug.WriteLine(ex.Message + ex.StackTrace);
-      }
+        /**
+        * 构造函数，根据给定数据构造物品
+        * @param {string} itemname
+        * @param {string} price
+        * @param {string} description
+        * @param {BitmapImage} picture
+        */
+        public Item(string itemname, float price, string description, BitmapImage picture,
+            string provider)
+        {
+            try
+            {
+                this.itemname = itemname;
+                this.price = price;
+                this.description = description;
+                this.picture = picture;
+                this.provider = provider;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message + ex.StackTrace);
+            }
+        }
     }
   }
 }
