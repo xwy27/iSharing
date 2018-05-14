@@ -51,7 +51,7 @@ User.prototype.save = function (callback) {
 
     connection.query('insert into User (username, password, email, tel, qq, wechat, icon)' +
       'values (?, ?, ?, ?, ?, ?, ?)',
-      [username, password, email, tel, qq, wechat, icon],
+      [this.username, this.password, this.email, this.tel, this.qq, this.wechat, this.icon],
       (err, results, fields) => {
         connection.release();
         if (err) {
@@ -103,7 +103,7 @@ User.prototype.update = function (callback) {
     }
 
     connection.query('update User set username=?, password=?, email=?, tel=?, qq=?, wechat=?, icon=? where username=?',
-      [username, password, email, tel, qq, wechat, icon, username],
+      [this.username, this.password, this.email, this.tel, this.qq, this.wechat, this.icon, this.username],
       (err, results, fields) => {
         connection.release();
         if (err) {

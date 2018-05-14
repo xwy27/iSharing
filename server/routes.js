@@ -12,6 +12,8 @@ module.exports = function (app) {
 
     var body = req.body;
 
+    console.log(body);
+
     var username = body.user.username,
       password = body.user.password,
       email = body.user.email,
@@ -37,7 +39,7 @@ module.exports = function (app) {
         return;
       }
 
-      req.status(200).json({
+      res.status(200).json({
         status: msg.error ? 'error' : 'success',
         errorMsg: msg.errorMsg
       }).end();
@@ -52,12 +54,13 @@ module.exports = function (app) {
 
     User.get(username, (err, users) => {
       if (err) {
+        
         res.status(500).end();
         console.error(err);
         return;
       }
 
-      req.status(200).json({
+      res.status(200).json({
         user: {
           username: users[0].username,
           password: users[0].password,
@@ -127,7 +130,7 @@ module.exports = function (app) {
         return;
       }
 
-      req.status(200).json({
+      res.status(200).json({
         status: msg.error ? 'error' : 'success',
         errorMsg: msg.errorMsg
       }).end();
@@ -139,7 +142,7 @@ module.exports = function (app) {
   app.post('/image_upload', upload.any(), (req, res) => {
     console.log(req.files);
     var temp_path = req.files.file.path;
-    var taget_path = './public/Images/' + req.files.file.name;
+    var taget_path = './public/Images/' + Date.now() + req.files.file.name;
 
     fs.rename(temp_path, taget_path, (err) => {
       if (err) {
@@ -154,7 +157,7 @@ module.exports = function (app) {
         }
         res.status(200).json({
           status: 'success',
-          url: 'localhost:8000/public/images/' + req.files.file.name
+          url: 'localhost:8000/Images/' + req.files.file.name
         }).end();
       });
     });
@@ -181,7 +184,7 @@ module.exports = function (app) {
         return;
       }
 
-      req.status(200).json({
+      res.status(200).json({
         status: msg.error ? 'error' : 'success',
         errorMsg: msg.errorMsg
       }).end();
@@ -209,7 +212,7 @@ module.exports = function (app) {
         return;
       }
 
-      req.status(200).json({
+      res.status(200).json({
         status: msg.error ? 'error' : 'success',
         errorMsg: msg.errorMsg
       }).end();
@@ -229,7 +232,7 @@ module.exports = function (app) {
         return;
       }
 
-      req.status(200).json({
+      res.status(200).json({
         item: {
           username: items[0].username,
           itemid: items[0].itemid,
@@ -256,7 +259,7 @@ module.exports = function (app) {
         return;
       }
 
-      req.status(200).json({
+      res.status(200).json({
         items: items
       }).end();
       return;
@@ -276,7 +279,7 @@ module.exports = function (app) {
         return;
       }
 
-      req.status(200).json({
+      res.status(200).json({
         items: items
       }).end();
       return;
@@ -296,7 +299,7 @@ module.exports = function (app) {
         return;
       }
 
-      req.status(200).json({
+      res.status(200).json({
         items: items
       }).end();
       return;

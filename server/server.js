@@ -7,7 +7,7 @@ var routes = require('./routes');
 app.set('port', process.env.PORT || 8000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('public/Images'));
+app.use(express.static('public'));
 
 routes(app);
 
