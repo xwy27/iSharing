@@ -6,7 +6,7 @@ db.getConnection((err, connection) => {
   }
   connection.query('create table if not exists Item' +
     '(username VARCHAR(30) not null,' +
-    'itemid INTEGER not null AUTO_INCREASEMENT,' +
+    'itemid INTEGER not null AUTO_INCREMENT,' +
     'itemname VARCHAR(100),' +
     'price FLOAT,' +
     'description TEXT,' +
