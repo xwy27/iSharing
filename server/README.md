@@ -232,7 +232,7 @@ or
 
 ```js
 {
-    item: {
+    item: [{
         username: '123',
         itemname: '123',
         itemid: 123,
@@ -240,7 +240,7 @@ or
         description: 'A Item',
         leasetimes: 123,
         icon: 'http://localhost:8000/public/Images/1.png'
-    }
+    }]
 }
 ```
 

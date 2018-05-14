@@ -231,15 +231,7 @@ module.exports = function (app) {
       }
 
       res.status(200).json({
-        item: {
-          username: items[0].username,
-          itemid: items[0].itemid,
-          itemname: items[0].itemname,
-          tel: items[0].tel,
-          description: items[0].description,
-          leasetimes: items[0].leasetimes,
-          icon: items[0].icon
-        }
+        item: items
       }).end();
       return;
     });
