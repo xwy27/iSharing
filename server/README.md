@@ -1,8 +1,8 @@
 # iSharing Server 使用指南
 
-注意：本部分未通过任何测试！
+注意：本部分仅通过了下述样例测试！
 
-注意：所有方法均为 POST！但如果您要通过 URL 获取图片，则应使用 GET。
+注意：所有方法均为 POST！但如果您要通过 URL 获取图片，则应使用 GET。在请求时，请务必指明类型为 **application/json** 或 **multipart/form-data**，本文中的C#示例代码理论上已经处理了这个问题（未测试）。
 
 ## Get Started
 
