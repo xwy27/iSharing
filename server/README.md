@@ -1,6 +1,6 @@
 # iSharing Server 使用指南
 
-注意：本部分仅通过了下述样例测试！
+注意：本部分通过了下述样例测试与委员版的前端交互测试！
 
 注意：所有方法均为 POST！但如果您要通过 URL 获取图片，则应使用 GET。在请求时，请务必指明类型为 **application/json** 或 **multipart/form-data**，本文中的C#示例代码理论上已经处理了这个问题（未测试）。
 
@@ -13,10 +13,29 @@ cd server
 npm install
 ```
 
-然后即可启动服务器：
+修改用户名密码为本地环境下的 mysql 服务器用户名与密码：
+
+```js
+// @file: model/db.js
+// @line: 6-7
+user: 'root',
+password: '',
+```
+
+启动 mysql 服务器并进入 mysql 命令行，创建数据库：
+```bash
+create database MOSAD_MIDTERM_DB;
+```
+
+创建文件夹 public/Images 来保存图片
 
 ```bash
-mysql.server start
+mkdir public/Images
+```
+
+完成上述步骤后即可启动服务器：
+
+```bash
 node server.js
 ```
 
@@ -50,7 +69,7 @@ icon|string, length <= 60000+|物品图片的URL
 
 **root:** http://localhost:8000
 
-### User
+### 用户信息
 
 #### /user_add
 
@@ -81,6 +100,36 @@ or
 
 {
     status: 'success'
+}
+```
+
+#### /user_login
+
+描述：用于检查用户名与密码是否对应
+
+请求参数示例：
+
+```js
+{
+    user: {
+        username: '123',
+        password: '123'
+    }
+}
+```
+
+返回：
+
+```js
+{
+    status: 'error',
+    errorMsg: '用户名或密码错误'
+}
+
+or
+
+{
+    status: 'success' 
 }
 ```
 
@@ -149,7 +198,7 @@ or
 }
 ```
 
-### Item
+### 物品信息
 
 #### /item_add
 
@@ -340,7 +389,7 @@ or
 }
 ```
 
-### Image
+### 图片
 
 #### /image_upload
 
@@ -365,7 +414,7 @@ public static async Task<bool> UploadFile(StorageFile file, string upload_url)
                 dataReader.ReadBytes(bytes);
             }
             var streamContent = new ByteArrayContent(bytes);
-            content.Add(streamContent, "file");
+            content.Add(streamContent, "file", "icon.png"); // filename matters nothing
         }
         //client.DefaultRequestHeaders.Add("Access-Token", AccessToken);
         var response = await client.PostAsync(new Uri(upload_url, UriKind.Absolute), content);
