@@ -12,6 +12,9 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Security.Cryptography;
+using Windows.Security.Cryptography.Core;
+using Windows.Storage.Streams;
 
 namespace iSharing.Models {
 
@@ -38,6 +41,18 @@ namespace iSharing.Models {
         return code1.GetString(getByte1, 0, getByte1.Length);
       }
       return "";
+    }
+
+    /**
+     * 加密函数
+     * @param {string} input 需加密信息
+     * @return {string} 加密后的 16 进制串
+     */
+    public static string Encode(string input) {
+      var alg = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
+      IBuffer buff = CryptographicBuffer.ConvertStringToBinary(input, BinaryStringEncoding.Utf8);
+      var hashed = alg.HashData(buff);
+      return CryptographicBuffer.EncodeToHexString(hashed);
     }
   }
 }

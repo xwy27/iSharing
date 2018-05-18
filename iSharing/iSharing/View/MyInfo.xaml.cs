@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using iSharing.Models;
 using iSharing.ViewModel;
 using Newtonsoft.Json.Linq;
 using Windows.Storage;
@@ -82,6 +83,9 @@ namespace iSharing {
       string qq = viewModel.CurrentUser.QQ;
       string wechat = viewModel.CurrentUser.Wechat;
 
+      if (viewModel.CurrentUser.Password.Length > 20) {
+        error += "密码长度最大为20\n";
+      }
       if (viewModel.CurrentUser.Phone.Length != 11) {
         error += "手机号码位数应为11\n";
       }
@@ -90,6 +94,15 @@ namespace iSharing {
       }
       if (!viewModel.CurrentUser.Mail.Contains("@")) {
         error += "邮箱格式错误\n";
+      }
+      if (viewModel.CurrentUser.Mail.Length > 50) {
+        error += "邮箱长度最大为50\n";
+      }
+      if (viewModel.CurrentUser.QQ.Length > 20) {
+        error += "QQ 号码最长为20\n";
+      }
+      if (viewModel.CurrentUser.Wechat.Length > 30) {
+        error += "微信号最长为30\n";
       }
 
       if (error != "") {
@@ -107,6 +120,7 @@ namespace iSharing {
           }
         }
 
+        password = Post.Encode(password);
         // post userInfo
         string jsonString = "{ \"user\" : {" +
             "\"username\":\"" + username + "\"," +
@@ -117,7 +131,7 @@ namespace iSharing {
             "\"icon\":\"" + viewModel.CurrentUser.PhotoUrl + "\"}" +
           "}";
         // post
-        string result = await Models.Post.PostHttp("/user_update", jsonString);
+        string result = await Post.PostHttp("/user_update", jsonString);
         // Pharse the json data
         JObject data = JObject.Parse(result);
         show = (data["status"].ToString() == "success") ? false : true;
