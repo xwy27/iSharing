@@ -46,7 +46,7 @@ node server.js
 字段名|数据类型|描述
 :-:|:-:|:-:
 username|string, length <= 30|用户名
-password|string, length <= 20|用户密码
+password|string, length <= 60|用户密码
 email|string, length <= 50|用户邮箱
 tel|string, length <= 11|用户电话
 wechat|string, length <= 30|微信号

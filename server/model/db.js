@@ -14,7 +14,7 @@ pool.getConnection((err, connection) => {
   }
   connection.query('create table if not exists User' +
     '(username VARCHAR(30) not null unique,' +
-    'password VARCHAR(20) not null,' +
+    'password VARCHAR(60) not null,' +
     'email VARCHAR(50),' +
     'tel VARCHAR(11),' +
     'wechat VARCHAR(30),' +
