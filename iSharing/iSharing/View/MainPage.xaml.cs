@@ -27,7 +27,7 @@ namespace iSharing {
           break;
 
         case "upload":
-          ContentFrame.Navigate(typeof(EditItem));
+          ContentFrame.Navigate(typeof(EditItem), "new");
           break;
 
         case "me":

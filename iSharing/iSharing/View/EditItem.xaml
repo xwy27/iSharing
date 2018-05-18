@@ -14,27 +14,31 @@
       </ResourceDictionary.MergedDictionaries>
     </ResourceDictionary>
   </Page.Resources>
-  
-  <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*"></ColumnDefinition>
-      <ColumnDefinition Width="400"></ColumnDefinition>
-      <ColumnDefinition Width="*"></ColumnDefinition>
-    </Grid.ColumnDefinitions>
 
-    <Grid Grid.Column="1">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="100" />
-        <RowDefinition Height="*" />
-      </Grid.RowDefinitions>
-      <TextBlock Text="添加物品"  Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-      <RelativePanel Grid.Row="1" >
-        <TextBox x:Name="Itemname" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignHorizontalCenterWithPanel="True" Height="30" Width="300" Margin="20" PlaceholderText="物品名称" />
-        <Image x:Name="Picture" RelativePanel.Below="Itemname" RelativePanel.AlignHorizontalCenterWithPanel="True" Source="/Assets/photo.jpg" Height="200" Width="300" Margin="20" />
-        <AppBarButton x:Name="Pick" RelativePanel.Below="Picture" RelativePanel.AlignRightWith="Picture" Icon="Pictures" Width="50" Height="50" Margin="20 0" Click="Pick_Click"/>
-        <TextBox x:Name="Description" RelativePanel.Below="Pick" RelativePanel.AlignHorizontalCenterWithPanel="True" Height="300" Width="300" Margin="20" PlaceholderText="物品介绍" />
-        <Button x:Name="Submit" Content="提交"  RelativePanel.Below="Description" RelativePanel.AlignHorizontalCenterWithPanel="True" Width="300" Margin="20" Click="Submit_Click"/>
-      </RelativePanel>
-    </Grid>
-  </Grid>
+
+    <ScrollViewer ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="400"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="添加物品"  Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <RelativePanel Grid.Row="1" >
+                    <TextBox x:Name="Itemname" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" Height="30" Width="200" Margin="50 20" PlaceholderText="物品名称" Text="{x:Bind itemViewModel.SelectItem.Itemname}" />
+                    <TextBox x:Name="Price" RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignRightWithPanel="True" Height="30" Width="50" Margin="50 20" PlaceholderText="0.0" Text="{x:Bind itemViewModel.SelectItem.Price}" />
+                    <Image x:Name="Picture" RelativePanel.Below="Itemname" RelativePanel.AlignHorizontalCenterWithPanel="True" Source="/Assets/photo.jpg" Height="200" Width="300" Margin="20" />
+                    <AppBarButton x:Name="Pick" RelativePanel.Below="Picture" RelativePanel.AlignRightWith="Picture" Icon="Pictures" Width="50" Height="50" Margin="20 0" Click="Pick_Click" />
+                    <TextBox x:Name="Description" RelativePanel.Below="Pick" RelativePanel.AlignHorizontalCenterWithPanel="True" Height="300" Width="300" Margin="20" PlaceholderText="物品介绍" Text="{x:Bind itemViewModel.SelectItem.Description}"/>
+                    <Button x:Name="Submit" Content="提交"  RelativePanel.Below="Description" RelativePanel.AlignHorizontalCenterWithPanel="True" Width="300" Margin="20" Click="Submit_Click"/>
+                </RelativePanel>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>

@@ -1,4 +1,5 @@
 ﻿using iSharing.ViewModel;
+using Windows.Data.Json;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -17,9 +18,23 @@ namespace iSharing {
 
     private void ListView_ItemClick (object sender, ItemClickEventArgs e) {
       ItemDetail.Visibility = Visibility.Visible;
+      Exit.Visibility = Visibility.Visible;
       ItemList.Visibility = Visibility.Collapsed;
       itemViewModel.SelectIndex = list.Items.IndexOf (e.ClickedItem);
-      itemViewModel.SelectItem = itemViewModel.Items[itemViewModel.SelectIndex];
+      
+      string jsonString = "{\"item\":{" + "\"itemid\":" + itemViewModel.SelectItem.Itemid + "}}";
+      JsonObject json = JsonObject.Parse(jsonString);
+    }
+
+    private void LoadMore_Click(object sender, RoutedEventArgs e) {
+       string jsonString = "{\"pageNumber\":" + (itemViewModel.Items.Count / 20 + 1).ToString() + "}";
+       JsonObject json = JsonObject.Parse(jsonString);
+    }
+
+    private void Exit_Click(object sender, RoutedEventArgs e) {
+      ItemDetail.Visibility = Visibility.Collapsed;
+      Exit.Visibility = Visibility.Collapsed;
+      ItemList.Visibility = Visibility.Visible;
     }
   }
 }

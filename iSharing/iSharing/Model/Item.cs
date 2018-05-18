@@ -37,6 +37,9 @@ namespace iSharing.Models {
 
     //提供者ID?姓名?联系方式?
     private string provider;
+    
+    //物品id
+    private int itemid;
 
     //物品名称接口
     public string Itemname {
@@ -83,6 +86,15 @@ namespace iSharing.Models {
       }
     }
 
+    //物品ID接口
+    public int Itemid {
+      get { return this.itemid; }
+      set {
+        this.itemid = value;
+        this.OnPropertyChanged();
+      }
+    }
+
     /**
     * 构造函数，根据给定数据构造物品
     * @param {string} itemname
@@ -91,13 +103,14 @@ namespace iSharing.Models {
     * @param {BitmapImage} picture
     */
     public Item(string itemname, float price, string description, BitmapImage picture,
-        string provider) {
+        string provider, int itemid = 0) {
       try {
         this.itemname = itemname;
         this.price = price;
         this.description = description;
         this.picture = picture;
         this.provider = provider;
+        this.itemid = itemid;
       }
       catch (Exception ex) {
         Debug.WriteLine(ex.Message + ex.StackTrace);

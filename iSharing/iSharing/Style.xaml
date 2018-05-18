@@ -56,4 +56,8 @@
     <Setter Property="Background" Value="LightGray"></Setter>
   </Style>
 
+  <Style TargetType="TextBlock" x:Key="Title">
+
+  </Style>
+
 </ResourceDictionary>
