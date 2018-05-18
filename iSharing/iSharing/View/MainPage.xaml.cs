@@ -1,5 +1,8 @@
 ﻿using System.Linq;
+using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Navigation;
 
 namespace iSharing {
   /// <summary>
@@ -19,7 +22,7 @@ namespace iSharing {
     private void NavView_Navigate(NavigationViewItem item) {
       switch (item.Tag) {
         /*case "home":
-          ContentFrame.Navigate(typeof(HomePage));
+          ContentFrame.Navigate(typeof(IndexPage));
           break;
         */
         case "items":

@@ -124,7 +124,7 @@ namespace iSharing.Models {
      * @param {string} qq qq号，可为空
      */
     public User (string username, string password, string mail, string phone,
-      BitmapImage photo, string wechat = "", string qq = "") {
+      string photoUrl, string wechat = "", string qq = "") {
       try {
         this.username = username;
         this.password = password;
@@ -132,7 +132,7 @@ namespace iSharing.Models {
         this.phone = phone;
         this.wechat = wechat;
         this.qq = qq;
-        this.photo = photo;
+        this.photoUrl = photoUrl;
       } catch (Exception ex) {
         Debug.WriteLine (ex.Message + ex.StackTrace);
       }

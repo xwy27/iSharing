@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Newtonsoft.Json.Linq;
-using System.Net.Http;
-using System.Text;
-using Newtonsoft.Json;
-using System.IO;
 using iSharing.ViewModel;
-using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace iSharing {
   /// <summary>
@@ -103,18 +97,9 @@ namespace iSharing {
         // post
         string result = await Models.Post.PostHttp("/user_add", jsonString);
         // Pharse json data
-        JsonReader reader = new JsonTextReader(new StringReader(result));
-        while (reader.Read()) {
-          if ((String)reader.Value == "status") {
-            reader.Read();
-            wrong = ((String)reader.Value == "success") ? false : true;
-          }
-          if ((String)reader.Value == "errorMsg") {
-            reader.Read();
-            error = (String)reader.Value;
-          }
-        }
-
+        JObject data = JObject.Parse(result);
+        wrong = (data["status"].ToString() == "success") ? false : true;
+        error = data["errorMsg"].ToString();
         if (wrong) {
           var dialog = new MessageDialog(error);
           await dialog.ShowAsync();
@@ -140,17 +125,9 @@ namespace iSharing {
       // post
       string result = await Models.Post.PostHttp("/user_login", jsonString);
       // Pharse json data
-      JsonReader reader = new JsonTextReader(new StringReader(result));
-      while (reader.Read()) {
-        if ((String)reader.Value == "status") {
-          reader.Read();
-          wrong = ((String)reader.Value == "success") ? false : true;
-        }
-        if ((String)reader.Value == "errorMsg") {
-          reader.Read();
-          error = (String)reader.Value;
-        }
-      }
+      JObject data = JObject.Parse(result);
+      wrong = (data["status"].ToString() == "success") ? false : true;
+      error = wrong ? data["errorMsg"].ToString() : "";
 
       if (wrong) {
         var dialog = new MessageDialog(error);

@@ -1,6 +1,10 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -34,6 +38,7 @@ namespace iSharing {
         rootFrame = new Frame ();
 
         rootFrame.NavigationFailed += OnNavigationFailed;
+        rootFrame.Navigated += OnNavigated;
 
         if (e.PreviousExecutionState == ApplicationExecutionState.Terminated) {
           //TODO: 从之前挂起的应用程序加载状态
@@ -52,6 +57,12 @@ namespace iSharing {
         }
         // 确保当前窗口处于活动状态
         Window.Current.Activate ();
+        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = 
+          rootFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+
+        CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+        ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor = Colors.White;
+        ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor = Color.FromArgb(0, 0, 0, 0);
       }
     }
 
@@ -75,6 +86,23 @@ namespace iSharing {
       var deferral = e.SuspendingOperation.GetDeferral ();
       //TODO: 保存应用程序状态并停止任何后台活动
       deferral.Complete ();
+    }
+
+    private void OnNavigated(object sender, NavigationEventArgs e) {
+      //根据页面是否可以返回，在窗口显示返回按钮
+      SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = 
+        ((Frame)sender).CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+    }
+
+    private void BackRequested(object sender, BackRequestedEventArgs e) {
+      Frame rootFrame = Window.Current.Content as Frame;
+      if (rootFrame == null) return;
+
+      //Navigate back if possible, and if the event has not already been handled .
+      if (!e.Handled && rootFrame.CanGoBack) {
+        e.Handled = true;
+        rootFrame.GoBack();
+      }
     }
   }
 }
