@@ -4,21 +4,33 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using System.Text;
+using Newtonsoft.Json;
+using System.IO;
+using iSharing.ViewModel;
+using System.Threading.Tasks;
 
 namespace iSharing {
   /// <summary>
   /// 登陆注册页面。
   /// </summary>
   public sealed partial class IndexPage : Page {
-    public IndexPage () {
-      this.InitializeComponent ();
+    // 用户视图模型
+    private UserViewModel viewModel = UserViewModel.GetInstance();
+    // 错误信息
+    private string error = "";
+
+    public IndexPage() {
+      this.InitializeComponent();
+      error = "";
     }
 
     /**
      * 转到登陆页面
      */
-    private void ToLogin (object sender, RoutedEventArgs e) {
-      Rest ();
+    private void ToLogin(object sender, RoutedEventArgs e) {
+      Rest();
       SignupPage.Visibility = Visibility.Collapsed;
       LoginPage.Visibility = Visibility.Visible;
     }
@@ -26,8 +38,8 @@ namespace iSharing {
     /**
      * 转到注册页面
      */
-    private void ToSignUp (object sender, RoutedEventArgs e) {
-      Rest ();
+    private void ToSignUp(object sender, RoutedEventArgs e) {
+      Rest();
       SignupPage.Visibility = Visibility.Visible;
       LoginPage.Visibility = Visibility.Collapsed;
     }
@@ -40,7 +52,8 @@ namespace iSharing {
      * 服务器校验失败，弹出错误信息
      */
     private async void SignUp(object sender, RoutedEventArgs e) {
-      string error = "";
+      bool wrong = false;
+      error = "";
 
       string username = SUsername.Text;
       string password = SPassword.Password;
@@ -72,19 +85,43 @@ namespace iSharing {
       if (tel != "" && tel[0] != '1') {
         error += "手机号码格式错误\n";
       }
-      if (email != "" && !email.Contains ("@")) {
+      if (email != "" && !email.Contains("@")) {
         error += "邮箱格式错误\n";
       }
 
       if (error != "") {
-        var dialog = new MessageDialog (error);
-        await dialog.ShowAsync ();
+        var dialog = new MessageDialog(error);
+        await dialog.ShowAsync();
       } else {
-        string jsonString = "{\"username\":\"" + username + "\"," + "\"password\":\"" + password + "\","
-          + "\"email\":\"" + email + "\"," + "\"tel\":\"" + tel + "\"}";
-        JObject signupJson = JObject.Parse(jsonString);
+
+        string jsonString = "{ \"user\": { " +
+            "\"username\":\"" + username + "\"," +
+            "\"password\":\"" + password + "\"," +
+            "\"email\":\"" + email + "\"," +
+            "\"tel\":\"" + tel + "\"}" +
+          "}";
         // post
-        Frame.Navigate (typeof (MainPage));
+        string result = await Models.Post.PostHttp("/user_add", jsonString);
+        // Pharse json data
+        JsonReader reader = new JsonTextReader(new StringReader(result));
+        while (reader.Read()) {
+          if ((String)reader.Value == "status") {
+            reader.Read();
+            wrong = ((String)reader.Value == "success") ? false : true;
+          }
+          if ((String)reader.Value == "errorMsg") {
+            reader.Read();
+            error = (String)reader.Value;
+          }
+        }
+
+        if (wrong) {
+          var dialog = new MessageDialog(error);
+          await dialog.ShowAsync();
+        } else {
+          viewModel.CurrentUser.username = username;
+          Frame.Navigate(typeof(MainPage));
+        }
       }
     }
 
@@ -93,21 +130,42 @@ namespace iSharing {
      * 成功跳转至 APP 主页面
      * 失败弹出错误信息
      */
-    private void LogIn (object sender, RoutedEventArgs e) {
-      string jsonString = "{\"username\":\"" + LUsername.Text + "\"," + "\"password\":\"" + LPassword.Password + "\"}";
-      JObject loginJson = JObject.Parse(jsonString);
+    private async void LogIn(object sender, RoutedEventArgs e) {
+      bool wrong = false;
+      error = "";
+      string jsonString = "{ \"user\" : {" +
+          "\"username\":\"" + LUsername.Text + "\"," +
+          "\"password\":\"" + LPassword.Password + "\"}" +
+        "}";
       // post
-      try {
-        Frame.Navigate (typeof (MainPage));
-      } catch (Exception ex) {
-        Debug.WriteLine (ex.Message + ex.StackTrace);
+      string result = await Models.Post.PostHttp("/user_login", jsonString);
+      // Pharse json data
+      JsonReader reader = new JsonTextReader(new StringReader(result));
+      while (reader.Read()) {
+        if ((String)reader.Value == "status") {
+          reader.Read();
+          wrong = ((String)reader.Value == "success") ? false : true;
+        }
+        if ((String)reader.Value == "errorMsg") {
+          reader.Read();
+          error = (String)reader.Value;
+        }
+      }
+
+      if (wrong) {
+        var dialog = new MessageDialog(error);
+        await dialog.ShowAsync();
+      } else {
+        viewModel.CurrentUser.username = LUsername.Text;
+        Frame.Navigate(typeof(MainPage));
       }
     }
 
     /**
      * 清空注册页面和登陆页面表单
      */
-    private void Rest () {
+    private void Rest() {
+      error = "";
       LUsername.Text = "";
       LPassword.Password = "";
 

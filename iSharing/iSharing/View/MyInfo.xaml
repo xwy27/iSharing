@@ -44,7 +44,7 @@
       <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="个人信息"  Style="{StaticResource title}"></TextBlock>
 
       <Image x:Name="photo" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="100" Margin="0 0 0 5" Source="Assets/photo.jpg"></Image>
-      <Button x:Name="select" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="上传" Style="{StaticResource button}" Width="50" ></Button>
+      <Button x:Name="select" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="上传" Style="{StaticResource button}" Width="50" Click="UpdatePhoto"></Button>
 
       <Grid x:Name="leftPart" Grid.Row="4" Grid.Column="0">
         <ListView VerticalAlignment="Stretch" IsItemClickEnabled="False" BorderThickness="0"

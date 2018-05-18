@@ -27,10 +27,73 @@ namespace iSharing {
     public MyInfo () {
       try {
         this.InitializeComponent ();
-        photo.Source = viewModel.CurrentUser.Photo;
+
+        GetInfo();
       } catch (Exception ex) {
         Debug.WriteLine (ex.Message + ex.StackTrace);
       }
+    }
+
+    /**
+     * 从服务器请求个人信息
+     * 显示个人信息页面信息
+     */
+    private async void GetInfo() {
+      string jsonString = "{ \"user\" : {\"username\":\"" + viewModel.CurrentUser.username + "\"} }";
+
+      string result = await Models.Post.PostHttp("/user_get", jsonString);
+
+      JsonReader reader = new JsonTextReader(new StringReader(result));
+      while (reader.Read()) {
+        if ((String)reader.Value == "username") {
+          reader.Read();
+          viewModel.CurrentUser.username = (String)reader.Value;
+        }
+        if ((String)reader.Value == "password") {
+          reader.Read();
+          viewModel.CurrentUser.Password = (String)reader.Value;
+        }
+        if ((String)reader.Value == "email") {
+          reader.Read();
+          viewModel.CurrentUser.Mail = (String)reader.Value;
+        }
+        if ((String)reader.Value == "tel") {
+          reader.Read();
+          viewModel.CurrentUser.Phone = (String)reader.Value;
+        }
+        if ((String)reader.Value == "qq") {
+          reader.Read();
+          viewModel.CurrentUser.QQ = (String)reader.Value;
+        }
+        if ((String)reader.Value == "wechat") {
+          reader.Read();
+          viewModel.CurrentUser.Wechat = (String)reader.Value;
+        }
+        if ((String)reader.Value == "icon") {
+          reader.Read();
+          if (reader.Value == null) {
+            viewModel.CurrentUser.PhotoUrl = "";
+          } else {
+            viewModel.CurrentUser.PhotoUrl = (String)reader.Value;
+          }
+        }
+      }
+
+      if (viewModel.CurrentUser.PhotoUrl != "") {
+        Windows.Web.Http.HttpClient http = new Windows.Web.Http.HttpClient();
+        IBuffer buffer = await http.GetBufferAsync(new Uri("http://" + viewModel.CurrentUser.PhotoUrl));
+        BitmapImage img = new BitmapImage();
+
+        using (IRandomAccessStream stream = new InMemoryRandomAccessStream()) {
+          await stream.WriteAsync(buffer);
+          stream.Seek(0);
+          await img.SetSourceAsync(stream);
+          photo.Source = img;
+        }
+      } else {
+        //photo.Source = new BitmapImage(new Uri("ms-appx///Assets/photo.jpg"));
+      }
+
     }
 
     /**
@@ -38,8 +101,9 @@ namespace iSharing {
      * 成功，弹出成功信息
      * 失败，弹出错误信息
      */
-    private async void UpdateInfo (object sender, RoutedEventArgs e) {
+    private async void UpdateInfo(object sender, RoutedEventArgs e) {
       try {
+        bool show = false;
         string error = "";
 
         string username = viewModel.CurrentUser.username;
@@ -55,13 +119,13 @@ namespace iSharing {
         if (viewModel.CurrentUser.Phone[0] != '1') {
           error += "手机号码格式错误\n";
         }
-        if (!viewModel.CurrentUser.Mail.Contains ("@")) {
+        if (!viewModel.CurrentUser.Mail.Contains("@")) {
           error += "邮箱格式错误\n";
         }
 
         if (error != "") {
-          var dialog = new MessageDialog (error);
-          await dialog.ShowAsync ();
+          var dialog = new MessageDialog(error);
+          await dialog.ShowAsync();
         } else {
           // post photo
           if (ApplicationData.Current.LocalSettings.Values.ContainsKey("MyToken")) {
@@ -69,24 +133,44 @@ namespace iSharing {
               StorageFile theFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(
                   (string)ApplicationData.Current.LocalSettings.Values["MyToken"]);
               if (theFile != null) {
-                //error += UploadPhoto(theFile, "");
+                error += await UploadPhoto(theFile, "http://localhost:8000/image_upload");
               }
             }
           }
-          
-          // post userInfo
-          string jsonString = "{\"username\":\"" + username + "\"," + "\"password\":\"" + password + "\","
-            + "\"email\":\"" + email + "\"," + "\"tel\":\"" + tel + "\","
-            + "\"qq\":\"" + qq + "\"," + "\"wechat\":\"" + wechat + "\","
-            + "\"icon\":\"" + viewModel.CurrentUser.PhotoUrl + "\"}";
-          JObject signupJson = JObject.Parse(jsonString);
-          // post
 
-          error += viewModel.CurrentUser.Mail;
-          var dialog = new MessageDialog (error);
-          await dialog.ShowAsync ();
+          // post userInfo
+          string jsonString = "{ \"user\" : {" +
+              "\"username\":\"" + username + "\"," +
+              "\"password\":\"" + password + "\"," +
+              "\"email\":\"" + email + "\"," + "\"tel\":\"" + tel + "\"," +
+              "\"qq\":\"" + qq + "\"," +
+              "\"wechat\":\"" + wechat + "\"," +
+              "\"icon\":\"" + viewModel.CurrentUser.PhotoUrl + "\"}" +
+            "}";
+          // post
+          string result = await Models.Post.PostHttp("/user_update", jsonString);
+          // Pharse the json data
+          JsonReader reader = new JsonTextReader(new StringReader(result));
+          while (reader.Read()) {
+            if ((String)reader.Value == "status") {
+              reader.Read();
+              show = ((String)reader.Value == "success") ? false : true;
+            }
+            if ((String)reader.Value == "errorMsg") {
+              reader.Read();
+              error = (String)reader.Value;
+            }
+          }
+          if (show) {
+            var dialog = new MessageDialog(error);
+            await dialog.ShowAsync();
+          } else {
+            var dialog = new MessageDialog("修改成功\n");
+            await dialog.ShowAsync();
+          }
+
         }
-      } catch(Exception ex) {
+      } catch (Exception ex) {
         Debug.WriteLine(ex.Message + ex.StackTrace);
       }
     }
@@ -134,9 +218,10 @@ namespace iSharing {
             await dataReader.LoadAsync((uint)streamData.Size);
             dataReader.ReadBytes(bytes);
           }
-          var streamContent = new ByteArrayContent(bytes);
-          content.Add(streamContent, "file");
+          var streamContent = new StreamContent(new MemoryStream(bytes));
+          content.Add(streamContent, "file", "icon.jpg");
         }
+
         var response = await client.PostAsync(new Uri(uploadUrl, UriKind.Absolute), content);
         if (response.IsSuccessStatusCode) {
           // Set encoding to 'UTF-8'
@@ -158,6 +243,8 @@ namespace iSharing {
             } else if ((String)reader.Value == "url") {
               reader.Read();
               viewModel.CurrentUser.PhotoUrl = (string)reader.Value;
+              var d = new MessageDialog(viewModel.CurrentUser.PhotoUrl);
+              await d.ShowAsync();
             }
           }
           if (msg != "") {
