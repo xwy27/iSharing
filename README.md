@@ -3,7 +3,6 @@
 <!-- TOC -->
 
 - [iSharing](#isharing)
-<<<<<<< HEAD
   - [代码规范](#代码规范)
   - [Design for Version 1.0](#design-for-version-10)
   - [DDL](#ddl)
@@ -12,14 +11,7 @@
     - [Login & Signup](#login--signup)
 - [iSharing FrontEnd](#isharing-frontend-1)
   - [Login & Signup](#login--signup-1)
-=======
-    - [代码规范](#)
-    - [Design for Version 1.0](#design-for-version-10)
-    - [DDL](#ddl)
-    - [API](#api)
-    - [iSharing FrontEnd](#isharing-frontend)
-        - [Login & Signup](#login-signup)
->>>>>>> 70530a2ce790cd5d51c9a73e1cc4e585261dc88e
+
 
 <!-- /TOC -->
 
