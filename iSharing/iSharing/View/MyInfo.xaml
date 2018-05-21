@@ -48,18 +48,18 @@
               <UserControl>
                 <Grid>
                   <Grid.RowDefinitions>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
-                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
+                      <RowDefinition Height="50"></RowDefinition>
                   </Grid.RowDefinitions>
                   <TextBlock Grid.Row="0" Text="用户名" Style="{StaticResource info}"></TextBlock>
                   <TextBox Text="{x:Bind username}" Grid.Row="1" Style="{StaticResource infoInput}" IsReadOnly="True"></TextBox>

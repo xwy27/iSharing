@@ -35,7 +35,7 @@ namespace iSharing.Models {
     //物品图片
     private BitmapImage picture;
 
-    //提供者ID?姓名?联系方式?
+    //提供者username
     private string provider;
     
     //物品id
@@ -77,7 +77,7 @@ namespace iSharing.Models {
       }
     }
 
-    //提供者ID?姓名?联系方式?
+    //提供者username
     public string Provider {
       get { return this.provider; }
       set {

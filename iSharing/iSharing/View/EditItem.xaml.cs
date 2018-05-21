@@ -1,11 +1,22 @@
-﻿using iSharing.ViewModel;
+﻿using iSharing.Models;
+using iSharing.ViewModel;
+using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Data.Json;
+using Windows.Graphics.Imaging;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using Windows.Web.Http;
 
 namespace iSharing {
   /// <summary>
@@ -34,10 +45,11 @@ namespace iSharing {
       picker.FileTypeFilter.Add (".png");
       picker.FileTypeFilter.Add (".bmp");
 
-      Windows.Storage.StorageFile file = await picker.PickSingleFileAsync ();
+      StorageFile file = await picker.PickSingleFileAsync ();
       if (file != null) {
+        ApplicationData.Current.LocalSettings.Values["ItemPic"] =
+            StorageApplicationPermissions.FutureAccessList.Add(file);
         using (var stream = await file.OpenAsync (Windows.Storage.FileAccessMode.Read)) {
-          SharedStorageAccessManager.AddFile (file);
           var bitmap = new BitmapImage ();
           await bitmap.SetSourceAsync (stream);
           Picture.Source = bitmap;
@@ -45,22 +57,55 @@ namespace iSharing {
       }
     }
 
-    private void Submit_Click (object sender, RoutedEventArgs e) {
+    private async void Submit_Click (object sender, RoutedEventArgs e) {
       string jsonString = "";
+      string result = "";
+      string picurl = await postPic();
       if (itemViewModel.SelectIndex == -1) {
         jsonString = "{\"item\":{" + "\"username\":\"" + userViewModel.CurrentUser.username +
                      "\",\"itemname\":" + Itemname.Text + ",\"price\":" + Price.Text +
-                     ",\"description\":" + Description.Text + ",\"leasetimes\":0}}";
-
+                     ",\"description\":" + Description.Text + ",\"leasetimes\":0" + ",\"icon\":" + picurl + "}}";
+        
+        result = await Post.PostHttp("/item_add", jsonString);
         
       } else {
         jsonString = "{\"item\":{" + "\"username\":" + userViewModel.CurrentUser.username +
                      ",\"itemname\":" + itemViewModel.SelectItem.Itemname + ",\"itemid\":" + itemViewModel.SelectItem.Itemid +
                      ",\"price\":" + itemViewModel.SelectItem.Price + ",\"description\":" + itemViewModel.SelectItem.Description +
-                     ",\"leasetimes\":0}}";
+                     ",\"leasetimes\":0" + ",\"icon\":" + picurl + "}}";
+        result = await Post.PostHttp("item_update", jsonString);
       }
-      JsonObject json = JsonObject.Parse(jsonString);
       
+    }
+    
+    private async Task<string> postPic() { 
+      string result = "";
+      if (ApplicationData.Current.LocalSettings.Values.ContainsKey("ItemPic")) {
+        string fileToken = (string)ApplicationData.Current.LocalSettings.Values["MyToken"];
+        if (fileToken != "") {
+          StorageFile file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(fileToken);
+          if (file != null) {
+            System.Net.Http.HttpClient http = new System.Net.Http.HttpClient();
+            var content = new MultipartFormDataContent();
+            var stream = await file.OpenReadAsync();
+            var bytes = new byte[stream.Size];
+            using (var dataReader = new DataReader(stream)) { 
+              await dataReader.LoadAsync((uint)stream.Size);
+              dataReader.ReadBytes(bytes);
+            }
+            content.Add(new StreamContent(new MemoryStream(bytes)), "file", "icon.jpg");
+
+            var response = await http.PostAsync(new Uri("http://localhost:8000/image_upload", UriKind.Absolute), content);
+            if (response.IsSuccessStatusCode) {
+              Byte[] responseByte = await response.Content.ReadAsByteArrayAsync();
+              result = Encoding.GetEncoding("UTF-8").GetString(responseByte);
+              JObject json = JObject.Parse(result);
+              result = json["url"].ToString();
+            }
+          }
+        }
+      }
+      return result;  
     }
   }
 }
