@@ -38,7 +38,7 @@
         <TextBlock Grid.Row="1" Text="个人信息"  Style="{StaticResource title}"></TextBlock>
 
         <Image x:Name="photo" Grid.Row="2" Source="Assets/photo.jpg"></Image>
-        <Button x:Name="select" Grid.Row="3" Content="上传" Style="{StaticResource button}" ></Button>
+        <Button x:Name="select" Grid.Row="3" Content="上传" Style="{StaticResource button}" Click="UpdatePhoto" ></Button>
 
 
         <ListView Grid.Row="4" VerticalAlignment="Stretch" IsItemClickEnabled="False" BorderThickness="0"

@@ -18,10 +18,9 @@ namespace iSharing {
 
     private void NavView_Navigate(NavigationViewItem item) {
       switch (item.Tag) {
-        /*case "home":
-          ContentFrame.Navigate(typeof(HomePage));
+        case "home":
+          ContentFrame.Navigate(typeof(IndexPage));
           break;
-        */
         case "items":
           ContentFrame.Navigate(typeof(ViewItem));
           break;

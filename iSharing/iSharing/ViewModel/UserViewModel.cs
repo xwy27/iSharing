@@ -41,7 +41,7 @@ namespace iSharing.ViewModel {
      */
     private UserViewModel () {
       try {
-        this.User.Add (new User ("Test", "Test", "123@qq.com", "12345678901", originPhoto));
+        this.User.Add (new User ("Test", "Test", "123@qq.com", "12345678901", "ms-appx///Assets/photo.jpg"));
         currentUser = User[0];
       } catch (Exception ex) {
         Debug.WriteLine (ex.Message + ex.StackTrace);
@@ -61,17 +61,17 @@ namespace iSharing.ViewModel {
      * @param {string} password 新密码
      * @param {string} mail 新邮箱
      * @param {string} phone 新电话
-     * @param {BitmapImage} photo 新头像
+     * @param {string} photoUrl 新头像
      * @param {string} wechat 新微信号
      * @param {string} qq 新qq号
      */
     public void UpdateUserInfo (string password, string mail, string phone,
-      BitmapImage photo, string wechat, string qq) {
+      string photoUrl, string wechat, string qq) {
       if (this.currentUser != null) {
         this.currentUser.Password = password;
         this.currentUser.Mail = mail;
         this.currentUser.Phone = phone;
-        this.currentUser.Photo = photo;
+        this.currentUser.PhotoUrl = photoUrl;
         this.currentUser.Wechat = wechat;
         this.currentUser.QQ = qq;
       }
