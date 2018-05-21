@@ -4,35 +4,37 @@
   xmlns:local="using:iSharing">
 
   <Style TargetType="TextBlock" x:Key="title">
-    <Setter Property="Width" Value="150"></Setter>
     <Setter Property="VerticalAlignment" Value="Center"></Setter>
     <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-    <Setter Property="Margin" Value="10 0 0 0"></Setter>
+    <Setter Property="Margin" Value="10"></Setter>
     <Setter Property="TextAlignment" Value="Center"></Setter>
-    <Setter Property="FontSize" Value="25"></Setter>
-    <Setter Property="FontWeight" Value="Bold"></Setter>
+    <Setter Property="FontSize" Value="40"></Setter>
+    <Setter Property="FontWeight" Value="SemiBold"></Setter>
   </Style>
 
   <Style TargetType="Button" x:Key="button">
-    <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
     <Setter Property="Width" Value="380"></Setter>
     <Setter Property="Background" Value="LightSkyBlue"></Setter>
   </Style>
 
   <Style TargetType="TextBox" x:Key="input">
-    <Setter Property="Width" Value="380"></Setter>
+    <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+    <Setter Property="Margin" Value="10"></Setter>
     <Setter Property="BorderBrush" Value="Gray"></Setter>
     <Setter Property="BorderThickness" Value="0 0 0 3"></Setter>
     <Setter Property="TextWrapping" Value="NoWrap"></Setter>
-    <Setter Property="FontSize" Value="25"></Setter>
+    <Setter Property="FontSize" Value="18"></Setter>
     <Setter Property="Background" Value="LightGray"></Setter>
   </Style>
 
   <Style TargetType="PasswordBox" x:Key="inputPwd">
-    <Setter Property="Width" Value="380"></Setter>
+    <Setter Property="VerticalAlignment" Value="Center"></Setter>
+    <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+    <Setter Property="Margin" Value="10"></Setter>
     <Setter Property="BorderBrush" Value="Gray"></Setter>
     <Setter Property="BorderThickness" Value="0 0 0 3"></Setter>
-    <Setter Property="FontSize" Value="25"></Setter>
+    <Setter Property="FontSize" Value="18"></Setter>
     <Setter Property="Background" Value="LightGray"></Setter>
     <Setter Property="Foreground" Value="LightGray"></Setter>
   </Style>
@@ -54,10 +56,6 @@
     <Setter Property="TextWrapping" Value="NoWrap"></Setter>
     <Setter Property="FontSize" Value="18"></Setter>
     <Setter Property="Background" Value="LightGray"></Setter>
-  </Style>
-
-  <Style TargetType="TextBlock" x:Key="Title">
-
   </Style>
 
 </ResourceDictionary>

@@ -15,7 +15,7 @@
     </ResourceDictionary>
   </Page.Resources>
 
-  <Grid x:Name="MainWindown" Background="DarkGray">
+  <Grid x:Name="MainWindown" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="*"></ColumnDefinition>
         <ColumnDefinition Width="400"></ColumnDefinition>
@@ -34,7 +34,6 @@
         <RowDefinition Height="50"></RowDefinition>
         <RowDefinition Height="*"></RowDefinition>
       </Grid.RowDefinitions>
-      <Border Grid.Row="1" Grid.RowSpan="7" BorderBrush="Black" BorderThickness="3" CornerRadius="20"></Border>
 
       <TextBlock Grid.Row="1" Text="登陆" Style="{StaticResource title}"></TextBlock>
 
@@ -44,11 +43,11 @@
       <TextBlock Grid.Row="4"></TextBlock>
       <PasswordBox x:Name="LPassword" Grid.Row="5" PlaceholderText="密码" Style="{StaticResource inputPwd}"></PasswordBox>
             
-      <Button Grid.Row="6" Content="登陆" Style="{StaticResource button}" FontSize="18" Click="LogIn"></Button>
+      <Button Grid.Row="6" Content="登陆" Style="{StaticResource button}" Click="LogIn"></Button>
 
       <RelativePanel Grid.Row="7">
-        <TextBlock Text="没有账号?" Style="{StaticResource title}" FontSize="18" RelativePanel.AlignRightWithPanel="True" Margin="0 0 10 0"></TextBlock>
-        <HyperlinkButton Content="注册" FontSize="18" RelativePanel.AlignRightWithPanel="True" Margin="0 -6 10 0" Click="ToSignUp"></HyperlinkButton>
+        <TextBlock Text="没有账号?" FontSize="18" RelativePanel.LeftOf="signup" RelativePanel.AlignVerticalCenterWithPanel="True"></TextBlock>
+        <HyperlinkButton x:Name="signup" Content="注册" FontSize="18" Margin="0 0 10 0" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Click="ToSignUp"></HyperlinkButton>
       </RelativePanel>
     </Grid>
 
@@ -70,9 +69,8 @@
         <RowDefinition Height="50"></RowDefinition>
         <RowDefinition Height="*"></RowDefinition>
       </Grid.RowDefinitions>
-      <Border Grid.Row="1" Grid.RowSpan="13" BorderBrush="Black" BorderThickness="3" CornerRadius="20"></Border>
 
-      <TextBlock Grid.Row="1" Text="注册" Style="{StaticResource title}" HorizontalAlignment="Center" TextAlignment="Center"></TextBlock>
+      <TextBlock Grid.Row="1" Text="注册" Style="{StaticResource title}" ></TextBlock>
 
       <TextBlock Grid.Row="2"></TextBlock>
       <TextBox x:Name="SUsername" Grid.Row="3" PlaceholderText="用户名" Style="{StaticResource input}"></TextBox>
@@ -89,11 +87,11 @@
       <TextBlock Grid.Row="10"></TextBlock>
       <TextBox x:Name="SPhone" Grid.Row="11" PlaceholderText="手机号码" Style="{StaticResource input}"></TextBox>
 
-      <Button Grid.Row="12" Content="注册" Style="{StaticResource button}" FontSize="18" Click="SignUp"></Button>
+      <Button Grid.Row="12" Content="注册" Style="{StaticResource button}" Click="SignUp"></Button>
 
       <RelativePanel Grid.Row="13">
-        <TextBlock Text="已有账号?" Style="{StaticResource title}" FontSize="18" RelativePanel.AlignRightWithPanel="True" Margin="0 0 30 0"></TextBlock>
-        <HyperlinkButton Content="登陆" FontSize="18" RelativePanel.AlignRightWithPanel="True" Margin="0 -6 10 0" Click="ToLogin"></HyperlinkButton>
+        <TextBlock Text="已有账号?" FontSize="18" RelativePanel.LeftOf="signin" RelativePanel.AlignVerticalCenterWithPanel="True"></TextBlock>
+        <HyperlinkButton x:Name="signin" Content="登陆" FontSize="18" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0 0 10 0" Click="ToLogin"></HyperlinkButton>
       </RelativePanel>
     </Grid>
   </Grid>

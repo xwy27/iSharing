@@ -16,50 +16,50 @@
     </ResourceDictionary>
   </Page.Resources>
 
-  <Grid Background="LightGray">
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="*"></ColumnDefinition>
-      <ColumnDefinition Width="800"></ColumnDefinition>
-      <ColumnDefinition Width="*"></ColumnDefinition>
-    </Grid.ColumnDefinitions>
-
-    <Grid x:Name="MyInfoPage" Grid.Column="1">
+  <ScrollViewer ScrollViewer.VerticalScrollMode="Enabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
       <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"></ColumnDefinition>
         <ColumnDefinition Width="400"></ColumnDefinition>
-        <ColumnDefinition Width="400"></ColumnDefinition>
+        <ColumnDefinition Width="*"></ColumnDefinition>
       </Grid.ColumnDefinitions>
 
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*"></RowDefinition>
-        <RowDefinition Height="80"></RowDefinition>
-        <RowDefinition Height="80"></RowDefinition>
-        <RowDefinition Height="30"></RowDefinition>
-        <RowDefinition Height="240"></RowDefinition>
-        <RowDefinition Height="100"></RowDefinition>
-        <RowDefinition Height="*"></RowDefinition>
-      </Grid.RowDefinitions>
+      <Grid x:Name="MyInfoPage" Grid.Column="1">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"></RowDefinition>
+          <RowDefinition Height="100"></RowDefinition>
+          <RowDefinition Height="80"></RowDefinition>
+          <RowDefinition Height="30"></RowDefinition>
+          <RowDefinition Height="auto"></RowDefinition>
+          <RowDefinition Height="100"></RowDefinition>
+          <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
 
-      <Border Grid.Row="1" Grid.Column="0" Grid.RowSpan="5" Grid.ColumnSpan="2" BorderBrush="Black" BorderThickness="2" CornerRadius="20" Margin="0 10 0 0"></Border>
+        <TextBlock Grid.Row="1" Text="个人信息"  Style="{StaticResource title}"></TextBlock>
 
-      <TextBlock Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="个人信息"  Style="{StaticResource title}"></TextBlock>
+        <Image x:Name="photo" Grid.Row="2" Source="Assets/photo.jpg"></Image>
+        <Button x:Name="select" Grid.Row="3" Content="上传" Style="{StaticResource button}" ></Button>
 
-      <Image x:Name="photo" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Width="100" Margin="0 0 0 5" Source="Assets/photo.jpg"></Image>
-      <Button x:Name="select" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="上传" Style="{StaticResource button}" Width="50" ></Button>
 
-      <Grid x:Name="leftPart" Grid.Row="4" Grid.Column="0">
-        <ListView VerticalAlignment="Stretch" IsItemClickEnabled="False" BorderThickness="0"
-                  SelectionMode="None" ItemsSource="{x:Bind viewModel.User}">
+        <ListView Grid.Row="4" VerticalAlignment="Stretch" IsItemClickEnabled="False" BorderThickness="0"
+        SelectionMode="None" ItemsSource="{x:Bind viewModel.User}">
           <ListView.ItemTemplate>
             <DataTemplate x:DataType="md:User">
               <UserControl>
                 <Grid>
                   <Grid.RowDefinitions>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
+                      <RowDefinition Height="40"></RowDefinition>
                   </Grid.RowDefinitions>
                   <TextBlock Grid.Row="0" Text="用户名" Style="{StaticResource info}"></TextBlock>
                   <TextBox Text="{x:Bind username}" Grid.Row="1" Style="{StaticResource infoInput}" IsReadOnly="True"></TextBox>
@@ -69,45 +69,22 @@
 
                   <TextBlock Grid.Row="4" Text="邮箱" Style="{StaticResource info}"></TextBlock>
                   <TextBox Text="{x:Bind Mail, Mode=TwoWay}" Grid.Row="5" PlaceholderText="E-mail" Style="{StaticResource infoInput}"></TextBox>
+
+                  <TextBlock Grid.Row="6" Text="手机号码" Style="{StaticResource info}"></TextBlock>
+                  <TextBox Grid.Row="7" Text="{x:Bind Phone, Mode=TwoWay}" Style="{StaticResource infoInput}"></TextBox>
+
+                  <TextBlock Grid.Row="8" Text="微信" Style="{StaticResource info}"></TextBlock>
+                  <TextBox Grid.Row="9" Text="{x:Bind Wechat, Mode=TwoWay}" Style="{StaticResource infoInput}"></TextBox>
+
+                  <TextBlock Grid.Row="10" Text="QQ" Style="{StaticResource info}"></TextBlock>
+                  <TextBox Grid.Row="11" Text="{x:Bind QQ, Mode=TwoWay}" Style="{StaticResource infoInput}"></TextBox>
                 </Grid>
               </UserControl>
             </DataTemplate>
           </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="save" Grid.Row="5" Content="保存" Style="{StaticResource button}" Click="UpdateInfo"></Button>
       </Grid>
-
-      <Grid x:Name="rightPart" Grid.Row="4" Grid.Column="1">
-        <ListView VerticalAlignment="Stretch" IsItemClickEnabled="False" BorderThickness="0" BorderBrush="LightGray"
-                  SelectionMode="None" ItemsSource="{x:Bind viewModel.User}">
-          <ListView.ItemTemplate>
-            <DataTemplate x:DataType="md:User">
-              <UserControl>
-                <Grid>
-                  <Grid.RowDefinitions>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                    <RowDefinition Height="40"></RowDefinition>
-                  </Grid.RowDefinitions>
-
-                  <TextBlock Grid.Row="0" Text="手机号码" Style="{StaticResource info}"></TextBlock>
-                  <TextBox Grid.Row="1" Text="{x:Bind Phone, Mode=TwoWay}" Style="{StaticResource infoInput}"></TextBox>
-
-                  <TextBlock Grid.Row="2" Text="微信" Style="{StaticResource info}"></TextBlock>
-                  <TextBox Grid.Row="3" Text="{x:Bind Wechat, Mode=TwoWay}" Style="{StaticResource infoInput}"></TextBox>
-
-                  <TextBlock Grid.Row="4" Text="QQ" Style="{StaticResource info}"></TextBlock>
-                  <TextBox Grid.Row="5" Text="{x:Bind QQ, Mode=TwoWay}" Style="{StaticResource infoInput}"></TextBox>
-                </Grid>
-              </UserControl>
-            </DataTemplate>
-          </ListView.ItemTemplate>
-        </ListView>
-      </Grid>
-
-      <Button x:Name="save" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Content="保存" Style="{StaticResource button}" Click="UpdateInfo"></Button>
     </Grid>
-  </Grid>
+  </ScrollViewer>
 </Page>
