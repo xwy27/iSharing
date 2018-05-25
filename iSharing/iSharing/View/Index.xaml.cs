@@ -115,7 +115,7 @@ namespace iSharing {
           await dialog.ShowAsync();
         } else {
           viewModel.CurrentUser.username = username;
-          // Frame.Navigate(typeof(MainPage));
+          Frame.Navigate(typeof(MainPage));
           // Enable
         }
       }
@@ -147,7 +147,7 @@ namespace iSharing {
         await dialog.ShowAsync();
       } else {
         viewModel.CurrentUser.username = LUsername.Text;
-        // Frame.Navigate(typeof(MainPage));
+        Frame.Navigate(typeof(MainPage));
         // Enable
       }
     }
