@@ -14,11 +14,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
+using Windows.Security.Cryptography.DataProtection;
 using Windows.Storage.Streams;
 
 namespace iSharing.Models {
 
   public class Post {
+    private static IBuffer buff;
     /**
      * 向服务器发送带有不同 json 的不同请求
      * @param {string} postUrl 请求Url
@@ -48,11 +50,15 @@ namespace iSharing.Models {
      * @param {string} input 需加密信息
      * @return {string} 加密后的 16 进制串
      */
-    public static string Encode(string input) {
+    public static string EncodePsd(string input) {
       var alg = HashAlgorithmProvider.OpenAlgorithm(HashAlgorithmNames.Md5);
-      IBuffer buff = CryptographicBuffer.ConvertStringToBinary(input, BinaryStringEncoding.Utf8);
+      buff = CryptographicBuffer.ConvertStringToBinary(input, BinaryStringEncoding.Utf8);
       var hashed = alg.HashData(buff);
       return CryptographicBuffer.EncodeToHexString(hashed);
+    }
+
+    public static string DecodePsd(string input) {
+      return CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, buff);
     }
   }
 }

@@ -97,7 +97,7 @@ namespace iSharing {
         var dialog = new MessageDialog(error);
         await dialog.ShowAsync();
       } else {
-        password = Post.Encode(password);
+        password = Post.EncodePsd(password);
         string jsonString = "{ \"user\": { " +
             "\"username\":\"" + username + "\"," +
             "\"password\":\"" + password + "\"," +
@@ -109,8 +109,8 @@ namespace iSharing {
         // Pharse json data
         JObject data = JObject.Parse(result);
         wrong = (data["status"].ToString() == "success") ? false : true;
-        error = data["errorMsg"].ToString();
         if (wrong) {
+          error = data["errorMsg"].ToString();
           var dialog = new MessageDialog(error);
           await dialog.ShowAsync();
         } else {
@@ -130,7 +130,7 @@ namespace iSharing {
       bool wrong = false;
       error = "";
 
-      string password = Post.Encode(LPassword.Password);
+      string password = Post.EncodePsd(LPassword.Password);
       string jsonString = "{ \"user\" : {" +
           "\"username\":\"" + LUsername.Text + "\"," +
           "\"password\":\"" + password + "\"}" +

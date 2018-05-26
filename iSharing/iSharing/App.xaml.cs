@@ -4,6 +4,7 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -95,14 +96,20 @@ namespace iSharing {
         ((Frame)sender).CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
     }
 
-    private void BackRequested(object sender, BackRequestedEventArgs e) {
+    private async void BackRequested(object sender, BackRequestedEventArgs e) {
       Frame rootFrame = Window.Current.Content as Frame;
       if (rootFrame == null) return;
 
       //Navigate back if possible, and if the event has not already been handled .
       if (!e.Handled && rootFrame.CanGoBack) {
-        e.Handled = true;
-        rootFrame.GoBack();
+        MessageDialog dialog = new MessageDialog("确认退出当前账号？", "登出");
+        dialog.Commands.Add(new UICommand("确定", cmd => { }, "退出"));
+        dialog.Commands.Add(new UICommand("取消", cmd => { }));
+        IUICommand result = await dialog.ShowAsync();
+        if (result.Id as string == "退出") {
+          e.Handled = true;
+          rootFrame.GoBack();
+        }
       }
     }
   }

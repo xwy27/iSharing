@@ -44,7 +44,7 @@ namespace iSharing {
 
       JObject data = JObject.Parse(result);
       viewModel.CurrentUser.username = data["user"]["username"].ToString();
-      viewModel.CurrentUser.Password = data["user"]["password"].ToString();
+      viewModel.CurrentUser.Password = Post.DecodePsd(data["user"]["password"].ToString());
       viewModel.CurrentUser.Mail = data["user"]["email"].ToString();
       viewModel.CurrentUser.Phone = data["user"]["tel"].ToString();
       viewModel.CurrentUser.QQ = data["user"]["qq"].ToString();
@@ -120,7 +120,7 @@ namespace iSharing {
           }
         }
 
-        password = Post.Encode(password);
+        password = Post.EncodePsd(password);
         // post userInfo
         string jsonString = "{ \"user\" : {" +
             "\"username\":\"" + username + "\"," +
