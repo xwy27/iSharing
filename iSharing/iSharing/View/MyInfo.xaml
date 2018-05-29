@@ -28,7 +28,7 @@
         <Grid.RowDefinitions>
           <RowDefinition Height="*"></RowDefinition>
           <RowDefinition Height="100"></RowDefinition>
-          <RowDefinition Height="80"></RowDefinition>
+          <RowDefinition Height="100"></RowDefinition>
           <RowDefinition Height="30"></RowDefinition>
           <RowDefinition Height="auto"></RowDefinition>
           <RowDefinition Height="100"></RowDefinition>
@@ -36,12 +36,13 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="1" Text="个人信息"  Style="{StaticResource title}"></TextBlock>
-        <Button x:Name="select" Grid.Row="2" Style="{StaticResource myphoto}" Click="UpdatePhoto" ></Button>
-        <Ellipse Grid.Row="2" Width="200" Height="200" Margin="10">
+        <Ellipse Grid.Row="2" Width="80" Height="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
           <Ellipse.Fill>
             <ImageBrush x:Name="photo" ImageSource="Assets/photo.jpg" />
           </Ellipse.Fill>
         </Ellipse>
+        <Button x:Name="select" Grid.Row="2" Width="80" Height="80" Margin="10" Style="{StaticResource myphoto}" Click="UpdatePhoto" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>
+ 
 
 
         <ListView Grid.Row="4" VerticalAlignment="Stretch" IsItemClickEnabled="False" BorderThickness="0"
@@ -50,6 +51,9 @@
             <DataTemplate x:DataType="md:User">
               <UserControl>
                 <Grid>
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="380"></ColumnDefinition>
+                  </Grid.ColumnDefinitions>
                   <Grid.RowDefinitions>
                       <RowDefinition Height="50"></RowDefinition>
                       <RowDefinition Height="50"></RowDefinition>
@@ -65,22 +69,22 @@
                       <RowDefinition Height="50"></RowDefinition>
                   </Grid.RowDefinitions>
                   <TextBlock Grid.Row="0" Text="用户名" Style="{StaticResource info}"></TextBlock>
-                  <TextBox Text="{x:Bind username}" Grid.Row="1" Style="{StaticResource infoInput}" IsReadOnly="True"></TextBox>
+                  <TextBox Text="{x:Bind username}" Grid.Row="1" Grid.Column="0" Style="{StaticResource input}" IsReadOnly="True"></TextBox>
 
                   <TextBlock Grid.Row="2" Text="密码" Style="{StaticResource info}"></TextBlock>
-                  <PasswordBox Password="{x:Bind Password, Mode=TwoWay}" Grid.Row="3" PlaceholderText="密码" Style="{StaticResource inputPwd}" FontSize="18"></PasswordBox>
+                  <PasswordBox Password="{x:Bind Password, Mode=TwoWay}" Grid.Row="3" Grid.Column="0" PlaceholderText="密码" Style="{StaticResource inputPwd}" FontSize="18"></PasswordBox>
 
                   <TextBlock Grid.Row="4" Text="邮箱" Style="{StaticResource info}"></TextBlock>
-                  <TextBox Text="{x:Bind Mail, Mode=TwoWay}" Grid.Row="5" PlaceholderText="E-mail" Style="{StaticResource infoInput}"></TextBox>
+                  <TextBox Text="{x:Bind Mail, Mode=TwoWay}" Grid.Row="5" Grid.Column="0" PlaceholderText="E-mail" Style="{StaticResource input}"></TextBox>
 
                   <TextBlock Grid.Row="6" Text="手机号码" Style="{StaticResource info}"></TextBlock>
-                  <TextBox Grid.Row="7" Text="{x:Bind Phone, Mode=TwoWay}" Style="{StaticResource infoInput}"></TextBox>
+                  <TextBox Text="{x:Bind Phone, Mode=TwoWay}" Grid.Row="7" Grid.Column="0" Style="{StaticResource input}"></TextBox>
 
                   <TextBlock Grid.Row="8" Text="微信" Style="{StaticResource info}"></TextBlock>
-                  <TextBox Grid.Row="9" Text="{x:Bind Wechat, Mode=TwoWay}" Style="{StaticResource infoInput}"></TextBox>
+                  <TextBox Text="{x:Bind Wechat, Mode=TwoWay}" Grid.Row="9" Grid.Column="0" Style="{StaticResource input}"></TextBox>
 
                   <TextBlock Grid.Row="10" Text="QQ" Style="{StaticResource info}"></TextBlock>
-                  <TextBox Grid.Row="11" Text="{x:Bind QQ, Mode=TwoWay}" Style="{StaticResource infoInput}"></TextBox>
+                  <TextBox Text="{x:Bind QQ, Mode=TwoWay}" Grid.Row="11" Grid.Column="0" Style="{StaticResource input}"></TextBox>
                 </Grid>
               </UserControl>
             </DataTemplate>

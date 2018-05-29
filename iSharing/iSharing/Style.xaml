@@ -16,8 +16,8 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
-          <Grid x:Name="rootGrid" Background="{TemplateBinding Background}" Opacity="0">
-            <TextBlock Text="+" FontSize="66" IsColorFontEnabled="True" VerticalAlignment="Center" HorizontalAlignment="Center" />
+          <Grid x:Name="rootGrid" Background="{TemplateBinding Background}" Opacity="0" Height="200" Width="300" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <TextBlock Text="+" FontSize="66" IsColorFontEnabled="True" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <VisualStateManager.VisualStateGroups>
               <VisualStateGroup>
                 <VisualState x:Name="Normal">
@@ -51,9 +51,8 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="Button">
-          <Grid x:Name="rootGrid" Background="{TemplateBinding Background}" Opacity="0">
-            <TextBlock Text="+" FontSize="66" IsColorFontEnabled="True" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <Ellipse Grid.Row="2" Width="200" Height="200" Margin="10">
+          <Grid x:Name="rootGrid" Background="White" Opacity="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Ellipse Grid.Row="2" Width="80" Height="80" VerticalAlignment="Center" HorizontalAlignment="Center">
               <Ellipse.Fill>
                 <SolidColorBrush Color="LightGray" />
               </Ellipse.Fill>
@@ -89,7 +88,7 @@
 
   <Style TargetType="Button" x:Key="button">
     <Setter Property="Width" Value="380"></Setter>
-    <Setter Property="Margin" Value="20"></Setter>
+    <Setter Property="Margin" Value="10"></Setter>
     <Setter Property="Background" Value="LightGray"></Setter>
     <Setter Property="Template">
       <Setter.Value>

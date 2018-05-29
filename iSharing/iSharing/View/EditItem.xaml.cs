@@ -12,6 +12,7 @@ using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
 using Windows.Storage.Streams;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -65,17 +66,24 @@ namespace iSharing {
         jsonString = "{\"item\":{" + "\"username\":\"" + userViewModel.CurrentUser.username +
                      "\",\"itemname\":" + Itemname.Text + ",\"price\":" + Price.Text +
                      ",\"description\":" + Description.Text + ",\"leasetimes\":0" + ",\"icon\":" + picurl + "}}";
-        
         result = await Post.PostHttp("/item_add", jsonString);
         
+        JObject data = JObject.Parse(result);
+        string error = (data["status"].ToString() == "error") ? data["errorMsg"].ToString() : "提交成功！\n";
+        var dialog = new MessageDialog(error);
+        await dialog.ShowAsync();
       } else {
         jsonString = "{\"item\":{" + "\"username\":" + userViewModel.CurrentUser.username +
                      ",\"itemname\":" + itemViewModel.SelectItem.Itemname + ",\"itemid\":" + itemViewModel.SelectItem.Itemid +
                      ",\"price\":" + itemViewModel.SelectItem.Price + ",\"description\":" + itemViewModel.SelectItem.Description +
                      ",\"leasetimes\":0" + ",\"icon\":" + picurl + "}}";
-        result = await Post.PostHttp("item_update", jsonString);
+        result = await Post.PostHttp("/item_update", jsonString);
+        
+        JObject data = JObject.Parse(result);
+        string error = (data["status"].ToString() == "error") ? data["errorMsg"].ToString() : "提交成功！\n";
+        var dialog = new MessageDialog(error);
+        await dialog.ShowAsync();
       }
-      
     }
     
     private async Task<string> postPic() { 

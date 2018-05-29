@@ -45,6 +45,13 @@ namespace iSharing {
       string jsonString = "{\"pageNumber\":" + (itemViewModel.Items.Count / 20 + 1).ToString() + "}";
       string result = await Post.PostHttp("/item_getpage", jsonString);
       
+      JObject data = JObject.Parse(result);
+      var items = data["items"];
+      foreach (var i in items) { 
+        BitmapImage image = await getPic(i["icon"].ToString());
+        itemViewModel.Items.Add(new Item(i["username"].ToString(), float.Parse(i["price"].ToString()),
+                                i["description"].ToString(), image, "provider", int.Parse(i["itemid"].ToString())));
+      }
     }
 
     private void Exit_Click(object sender, RoutedEventArgs e) {
