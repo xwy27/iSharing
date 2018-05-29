@@ -38,7 +38,7 @@
         <TextBlock Grid.Row="1" Text="个人信息"  Style="{StaticResource title}"></TextBlock>
         <Ellipse Grid.Row="2" Width="80" Height="80" Margin="10" VerticalAlignment="Center" HorizontalAlignment="Center">
           <Ellipse.Fill>
-            <ImageBrush x:Name="photo" ImageSource="Assets/photo.jpg" />
+            <ImageBrush x:Name="photo" ImageSource="ms-appx///Assets/photo.jpg" />
           </Ellipse.Fill>
         </Ellipse>
         <Button x:Name="select" Grid.Row="2" Width="80" Height="80" Margin="10" Style="{StaticResource myphoto}" Click="UpdatePhoto" VerticalAlignment="Center" HorizontalAlignment="Center"></Button>

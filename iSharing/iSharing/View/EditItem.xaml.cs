@@ -2,22 +2,14 @@
 using iSharing.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
-using System.IO;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Data.Json;
-using Windows.Graphics.Imaging;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
-using Windows.Storage.Streams;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
-using Windows.Web.Http;
 
 namespace iSharing {
   /// <summary>
@@ -92,7 +84,7 @@ namespace iSharing {
         string fileToken = (string)ApplicationData.Current.LocalSettings.Values["MyToken"];
         if (fileToken != "") {
           StorageFile file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(fileToken);
-          if (file != null) {
+          /*if (file != null) {
             System.Net.Http.HttpClient http = new System.Net.Http.HttpClient();
             var content = new MultipartFormDataContent();
             var stream = await file.OpenReadAsync();
@@ -110,7 +102,10 @@ namespace iSharing {
               JObject json = JObject.Parse(result);
               result = json["url"].ToString();
             }
-          }
+          }*/
+          result = await Post.PostPhoto(file);
+          JObject json = JObject.Parse(result);
+          result = json["url"].ToString();
         }
       }
       return result;  

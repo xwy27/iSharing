@@ -7,14 +7,13 @@
  **************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
-using Windows.Security.Cryptography.DataProtection;
+using Windows.Storage;
 using Windows.Storage.Streams;
 
 namespace iSharing.Models {
@@ -45,8 +44,32 @@ namespace iSharing.Models {
       return "";
     }
 
+    public static async Task<string> PostPhoto(StorageFile file) {
+      HttpClient client = new HttpClient();
+      var content = new MultipartFormDataContent();
+      if (file != null) {
+        var streamData = await file.OpenReadAsync();
+        var bytes = new byte[streamData.Size];
+        using (var dataReader = new DataReader(streamData)) {
+          await dataReader.LoadAsync((uint)streamData.Size);
+          dataReader.ReadBytes(bytes);
+        }
+        var streamContent = new StreamContent(new MemoryStream(bytes));
+        content.Add(streamContent, "file", "icon.jpg");
+      }
+
+      var response = await client.PostAsync(new Uri("http://localhost:8000/image_upload", UriKind.Absolute), content);
+      if (response.IsSuccessStatusCode) {
+        // Set encoding to 'UTF-8'
+        Byte[] getByte1 = await response.Content.ReadAsByteArrayAsync();
+        Encoding code1 = Encoding.GetEncoding("UTF-8");
+        return code1.GetString(getByte1, 0, getByte1.Length);
+      }
+      return "";
+    }
+
     /**
-     * 加密函数
+     * 加密 password 函数
      * @param {string} input 需加密信息
      * @return {string} 加密后的 16 进制串
      */
@@ -57,6 +80,11 @@ namespace iSharing.Models {
       return CryptographicBuffer.EncodeToHexString(hashed);
     }
 
+    /**
+     * 解密 password 函数
+     * @param {string} input 需解密信息
+     * @return {string} 解密后的信息
+     */
     public static string DecodePsd(string input) {
       return CryptographicBuffer.ConvertBinaryToString(BinaryStringEncoding.Utf8, buff);
     }

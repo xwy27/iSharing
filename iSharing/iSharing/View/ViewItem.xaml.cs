@@ -3,7 +3,6 @@ using iSharing.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
-using Windows.Data.Json;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;

@@ -116,7 +116,6 @@ namespace iSharing {
         } else {
           viewModel.CurrentUser.username = username;
           Frame.Navigate(typeof(MainPage));
-          // Enable
         }
       }
     }
@@ -148,7 +147,6 @@ namespace iSharing {
       } else {
         viewModel.CurrentUser.username = LUsername.Text;
         Frame.Navigate(typeof(MainPage));
-        // Enable
       }
     }
 
