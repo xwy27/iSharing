@@ -36,9 +36,12 @@
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="1" Text="个人信息"  Style="{StaticResource title}"></TextBlock>
-
-        <Image x:Name="photo" Grid.Row="2" Source="Assets/photo.jpg"></Image>
-        <Button x:Name="select" Grid.Row="3" Content="上传" Style="{StaticResource button}" Click="UpdatePhoto" ></Button>
+        <Button x:Name="select" Grid.Row="2" Style="{StaticResource myphoto}" Click="UpdatePhoto" ></Button>
+        <Ellipse Grid.Row="2" Width="200" Height="200" Margin="10">
+          <Ellipse.Fill>
+            <ImageBrush x:Name="photo" ImageSource="Assets/photo.jpg" />
+          </Ellipse.Fill>
+        </Ellipse>
 
 
         <ListView Grid.Row="4" VerticalAlignment="Stretch" IsItemClickEnabled="False" BorderThickness="0"

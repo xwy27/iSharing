@@ -51,7 +51,7 @@ namespace iSharing.ViewModel {
         if (SelectIndex >= 0 && SelectIndex < observableItemCollection.Count) {
           SelectItem = observableItemCollection[SelectedIndex];
         } else {
-          SelectItem = new Item("", 0, "", null, "");
+          SelectItem = new Item("", 0, "", new BitmapImage(new Uri("ms-appx:///Assets/photo.jpg")), "");
         }
         OnPropertyChanged();
       }
@@ -64,7 +64,7 @@ namespace iSharing.ViewModel {
         if (SelectedItem != null) {
           return SelectedItem;
         } else {
-          return new Item("", 0, "", null, "");
+          return new Item("", 0, "", new BitmapImage(new Uri("ms-appx:///Assets/photo.jpg")), "");
         }
       }
       set {

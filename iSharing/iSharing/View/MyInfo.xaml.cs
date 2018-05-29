@@ -59,7 +59,7 @@ namespace iSharing {
           await stream.WriteAsync(buffer);
           stream.Seek(0);
           await img.SetSourceAsync(stream);
-          photo.Source = img;
+          photo.ImageSource = img;
         }
       } else {
         //photo.Source = new BitmapImage(new Uri("ms-appx///Assets/photo.jpg"));
@@ -162,7 +162,7 @@ namespace iSharing {
         IRandomAccessStream ir = await file.OpenAsync (FileAccessMode.Read);
         BitmapImage bi = new BitmapImage ();
         await bi.SetSourceAsync (ir);
-        photo.Source = bi;
+        photo.ImageSource = bi;
       }
     }
 

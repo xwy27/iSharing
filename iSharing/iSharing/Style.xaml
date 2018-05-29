@@ -11,10 +11,127 @@
     <Setter Property="FontSize" Value="40"></Setter>
     <Setter Property="FontWeight" Value="SemiBold"></Setter>
   </Style>
+    
+  <Style TargetType="Button" x:Key="photo">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid x:Name="rootGrid" Background="{TemplateBinding Background}" Opacity="0">
+            <TextBlock Text="+" FontSize="66" IsColorFontEnabled="True" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup>
+                <VisualState x:Name="Normal">
+                  <Storyboard>
+                    <PointerUpThemeAnimation Storyboard.TargetName="rootGrid"/>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="rootGrid" Storyboard.TargetProperty="Opacity">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="50"/>
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="rootGrid" Storyboard.TargetProperty="Opacity">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="70" />
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+    
+  <Style TargetType="Button" x:Key="myphoto">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid x:Name="rootGrid" Background="{TemplateBinding Background}" Opacity="0">
+            <TextBlock Text="+" FontSize="66" IsColorFontEnabled="True" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Ellipse Grid.Row="2" Width="200" Height="200" Margin="10">
+              <Ellipse.Fill>
+                <SolidColorBrush Color="LightGray" />
+              </Ellipse.Fill>
+            </Ellipse>
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup>
+                <VisualState x:Name="Normal">
+                  <Storyboard>
+                    <PointerUpThemeAnimation Storyboard.TargetName="rootGrid"/>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="rootGrid" Storyboard.TargetProperty="Opacity">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="50"/>
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="rootGrid" Storyboard.TargetProperty="Opacity">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="70" />
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
 
   <Style TargetType="Button" x:Key="button">
     <Setter Property="Width" Value="380"></Setter>
-    <Setter Property="Background" Value="LightSkyBlue"></Setter>
+    <Setter Property="Margin" Value="20"></Setter>
+    <Setter Property="Background" Value="LightGray"></Setter>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid x:Name="rootGrid" CornerRadius="20" Background="{TemplateBinding Background}">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup>
+                <VisualState x:Name="Normal">
+                  <Storyboard>
+                    <PointerUpThemeAnimation Storyboard.TargetName="rootGrid" />
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="PointerOver">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="rootGrid" Storyboard.TargetProperty="Background">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="LightBlue" />
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <Storyboard>
+                    <ObjectAnimationUsingKeyFrames Storyboard.TargetName="rootGrid" Storyboard.TargetProperty="Background">
+                      <DiscreteObjectKeyFrame KeyTime="0" Value="SkyBlue" />
+                    </ObjectAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <ContentPresenter CornerRadius="20"
+              AutomationProperties.AccessibilityView="Raw"  
+              BorderBrush="{TemplateBinding BorderBrush}"  
+              BorderThickness="{TemplateBinding BorderThickness}"  
+              ContentTemplate="{TemplateBinding ContentTemplate}"  
+              ContentTransitions="{TemplateBinding ContentTransitions}"  
+              Content="{TemplateBinding Content}"  
+              HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"  
+              Padding="{TemplateBinding Padding}"  
+              VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" /> 
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
 
   <Style TargetType="TextBox" x:Key="input">
@@ -25,7 +142,7 @@
     <Setter Property="BorderThickness" Value="0 0 0 3"></Setter>
     <Setter Property="TextWrapping" Value="NoWrap"></Setter>
     <Setter Property="FontSize" Value="18"></Setter>
-    <Setter Property="Background" Value="LightGray"></Setter>
+    <Setter Property="Background" Value="White"></Setter>
   </Style>
 
   <Style TargetType="PasswordBox" x:Key="inputPwd">
@@ -35,8 +152,8 @@
     <Setter Property="BorderBrush" Value="Gray"></Setter>
     <Setter Property="BorderThickness" Value="0 0 0 3"></Setter>
     <Setter Property="FontSize" Value="18"></Setter>
-    <Setter Property="Background" Value="LightGray"></Setter>
-    <Setter Property="Foreground" Value="LightGray"></Setter>
+    <Setter Property="Background" Value="White"></Setter>
+    <Setter Property="Foreground" Value="LightBlue"></Setter>
   </Style>
 
   <Style TargetType="TextBlock" x:Key="info">
@@ -55,7 +172,7 @@
     <Setter Property="BorderThickness" Value="0 0 0 3"></Setter>
     <Setter Property="TextWrapping" Value="NoWrap"></Setter>
     <Setter Property="FontSize" Value="18"></Setter>
-    <Setter Property="Background" Value="LightGray"></Setter>
+    <Setter Property="Background" Value="White"></Setter>
   </Style>
 
 </ResourceDictionary>
