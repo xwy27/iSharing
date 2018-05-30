@@ -28,7 +28,9 @@ namespace iSharing {
         itemViewModel.SelectIndex = -1;
       }
     }
-
+    
+    /** 图片选择器并替换当前图片显示
+     */
     private async void Pick_Click (object sender, RoutedEventArgs e) {
       var picker = new Windows.Storage.Pickers.FileOpenPicker ();
       picker.ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail;
@@ -49,15 +51,19 @@ namespace iSharing {
         }
       }
     }
+    
 
+    /** 点击将物品信息提交至服务器
+     * Index: 判断物品是新的还是已存在的
+     */
     private async void Submit_Click (object sender, RoutedEventArgs e) {
       string jsonString = "";
       string result = "";
       string picurl = await postPic();
       if (itemViewModel.SelectIndex == -1) {
         jsonString = "{\"item\":{" + "\"username\":\"" + userViewModel.CurrentUser.username +
-                     "\",\"itemname\":" + Itemname.Text + ",\"price\":" + Price.Text +
-                     ",\"description\":" + Description.Text + ",\"leasetimes\":0" + ",\"icon\":" + picurl + "}}";
+                     "\",\"itemname\":\"" + Itemname.Text + "\",\"price\":" + int.Parse(Price.Text) +
+                     ",\"description\":\"" + Description.Text + "\",\"leasetimes\":0" + ",\"icon\":\"" + picurl + "\"}}";
         result = await Post.PostHttp("/item_add", jsonString);
         
         JObject data = JObject.Parse(result);
