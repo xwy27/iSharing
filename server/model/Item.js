@@ -72,6 +72,8 @@ Item.getOne = (itemid, callback) => {
     }
 
     connection.query('select * from Item where itemid = ?', [itemid], (err, results, fields) => {
+      
+      connection.release();
       if (err) {
         return callback(err);
       }
@@ -93,6 +95,8 @@ Item.getList = (pageNumber, callback) => {
     }
 
     connection.query('select * from Item limit ?, ?', [(pageNumber - 1) * 20, (pageNumber - 1) * 20 + 19], (err, results, fields) => {
+      
+      connection.release();
       if (err) {
         return callback(err);
       }
@@ -115,6 +119,8 @@ Item.getOnesList = (username, pageNumber, callback) => {
     }
 
     connection.query('select * from Item where username = ? limit ?, ?', [username, (pageNumber - 1) * 20, (pageNumber - 1) * 20 + 19], (err, results, fields) => {
+      
+      connection.release();
       if (err) {
         return callback(err);
       }
@@ -136,6 +142,8 @@ Item.findList = (itemname, pageNumber, callback) => {
     }
 
     connection.query('select * from Item where itemname like ? limit ?, ?', ['%' + itemname + '%', (pageNumber - 1) * 20, (pageNumber - 1) * 20 + 19], (err, results, fields) => {
+      
+      connection.release();
       if (err) {
         return callback(err);
       }
