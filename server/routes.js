@@ -163,6 +163,8 @@ module.exports = function (app) {
   app.post('/item_add', (req, res) => {
     var body = req.body;
 
+    console.log(body.item);
+
     var newItem = new Item({
       username: body.item.username,
       itemid: null,

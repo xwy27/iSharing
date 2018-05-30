@@ -96,7 +96,7 @@ namespace iSharing {
     private async Task<string> postPic() { 
       string result = "";
       if (ApplicationData.Current.LocalSettings.Values.ContainsKey("ItemPic")) {
-        string fileToken = (string)ApplicationData.Current.LocalSettings.Values["MyToken"];
+        string fileToken = (string)ApplicationData.Current.LocalSettings.Values["ItemPic"];
         if (fileToken != "") {
           StorageFile file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(fileToken);
           /*if (file != null) {

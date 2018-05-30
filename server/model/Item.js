@@ -92,7 +92,7 @@ Item.getList = (pageNumber, callback) => {
       return callback(err);
     }
 
-    connection.query('select * from Item limit ?, ?', [(pageNumber - 1) * 20, (pageNumber - 1) * 20 + 19], (err, results, fields) => {
+    connection.query('select * from Item limit ?, ?', [(pageNumber - 1) * 20, (pageNumber - 1) * 20 + 20], (err, results, fields) => {
       if (err) {
         return callback(err);
       }
@@ -114,7 +114,7 @@ Item.getOnesList = (username, pageNumber, callback) => {
       return callback(err);
     }
 
-    connection.query('select * from Item where username = ? limit ?, ?', [username, (pageNumber - 1) * 20, (pageNumber - 1) * 20 + 19], (err, results, fields) => {
+    connection.query('select * from Item where username = ? limit ?, ?', [username, (pageNumber - 1) * 20, (pageNumber - 1) * 20 + 20], (err, results, fields) => {
       if (err) {
         return callback(err);
       }
@@ -135,7 +135,7 @@ Item.findList = (itemname, pageNumber, callback) => {
       return callback(err);
     }
 
-    connection.query('select * from Item where itemname like ? limit ?, ?', ['%' + itemname + '%', (pageNumber - 1) * 20, (pageNumber - 1) * 20 + 19], (err, results, fields) => {
+    connection.query('select * from Item where itemname like ? limit ?, ?', ['%' + itemname + '%', (pageNumber - 1) * 20, (pageNumber - 1) * 20 + 20], (err, results, fields) => {
       if (err) {
         return callback(err);
       }
