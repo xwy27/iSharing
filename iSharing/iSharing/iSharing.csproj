@@ -127,7 +127,7 @@
     <None Include="iSharing_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\logo.png" />
+    <Content Include="Assets\logo.jpg" />
     <Content Include="Assets\photo.jpg" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

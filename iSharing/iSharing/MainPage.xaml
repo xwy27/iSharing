@@ -7,8 +7,8 @@
   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
   mc:Ignorable="d">
 
-  <NavigationView x:Name="PrimaryPage" IsSettingsVisible="False" ItemInvoked="InvokeNavigationItem">
 
+  <NavigationView x:Name="PrimaryPage" IsSettingsVisible="False" ItemInvoked="InvokeNavigationItem">
     <NavigationView.MenuItems>
       <NavigationViewItem x:Uid="Home" Content="主页" Tag="home">
         <NavigationViewItem.Icon>
@@ -21,7 +21,6 @@
       <NavigationViewItem x:Uid="PostItems" Icon="Upload" Content="发布物品" Tag="upload"/>
       <NavigationViewItem x:Uid="MyInfo" Icon="Contact" Content="我的信息" Tag="me"/>
     </NavigationView.MenuItems>
-
     <NavigationView.HeaderTemplate>
       <DataTemplate>
         <Grid Margin="24,10,0,0">

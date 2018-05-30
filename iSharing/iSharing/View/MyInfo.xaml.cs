@@ -58,7 +58,8 @@ namespace iSharing {
           photo.ImageSource = img;
         }
       } else {
-        //photo.Source = new BitmapImage(new Uri("ms-appx///Assets/photo.jpg"));
+        //var source = new BitmapImage(new Uri("ms-appx///Assets/logo.jpg"));
+        //photo.ImageSource = source;
       }
 
     }
