@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Controls;
 using iSharing.ViewModel;
 using Newtonsoft.Json.Linq;
 using iSharing.Models;
+using System.Text.RegularExpressions;
 
 namespace iSharing {
   /// <summary>
@@ -163,6 +164,16 @@ namespace iSharing {
       SConfrimPwd.Password = "";
       SMail.Text = "";
       SPhone.Text = "";
+    }
+
+    private void SPhone_TextChanged(object sender, TextChangedEventArgs e) {
+      int phone;
+      if(!int.TryParse(SPhone.Text.ToString(), out phone)) {
+        Regex number = new Regex("[^0-9]");
+        string after = SPhone.Text.ToString();
+        after = number.Replace(after, "");
+        SPhone.Text = after;
+      }
     }
   }
 }

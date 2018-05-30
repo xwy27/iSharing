@@ -85,7 +85,7 @@
       <TextBox x:Name="SMail" Grid.Row="9" PlaceholderText="E-mail" Style="{StaticResource input}"></TextBox>
 
       <TextBlock Grid.Row="10"></TextBlock>
-      <TextBox x:Name="SPhone" Grid.Row="11" PlaceholderText="手机号码" Style="{StaticResource input}"></TextBox>
+      <TextBox x:Name="SPhone" Grid.Row="11" PlaceholderText="手机号码" Style="{StaticResource input}" TextChanged="SPhone_TextChanged"></TextBox>
 
       <Button Grid.Row="12" Content="注册" Style="{StaticResource button}" Click="SignUp"></Button>
 

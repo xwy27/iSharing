@@ -44,10 +44,10 @@
             <RowDefinition Height="50" />
           </Grid.RowDefinitions>
           <TextBox x:Name="Itemname" Grid.Column="0" Grid.Row="0" PlaceholderText="物品名称" Text="{x:Bind itemViewModel.SelectItem.Itemname}" Style="{StaticResource input}" />
-          <TextBox x:Name="Price" Grid.Column="1" Grid.Row="0" PlaceholderText="0.0" Text="{x:Bind itemViewModel.SelectItem.Price}" Style="{StaticResource input}" />
+          <TextBox x:Name="Price" Grid.Column="1" Grid.Row="0" PlaceholderText="0.0" Text="{x:Bind itemViewModel.SelectItem.Price}" Style="{StaticResource input}" TextChanged="Price_TextChanged"/>
           <Image x:Name="Picture" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Source="{x:Bind itemViewModel.SelectItem.Picture}" Height="200" Width="300" Margin="20" />
           <Button x:Name="Pick" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Click="Pick_Click" VerticalAlignment="Center" HorizontalAlignment="Center" Height="200" Width="300" Margin="20" Style="{StaticResource photo}"/>
-          <TextBox x:Name="Description" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Height="300" Style="{StaticResource input}" PlaceholderText="物品介绍" Text="{x:Bind itemViewModel.SelectItem.Description}"/>
+          <TextBox x:Name="Description" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2" Height="300" Style="{StaticResource input}" TextWrapping="Wrap" PlaceholderText="物品介绍" Text="{x:Bind itemViewModel.SelectItem.Description}"/>
           <Button x:Name="Submit" Content="提交" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Style="{StaticResource button}" Click="Submit_Click"/>
         </Grid>
       </Grid>

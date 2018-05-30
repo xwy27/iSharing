@@ -2,6 +2,7 @@
 using iSharing.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -57,31 +58,39 @@ namespace iSharing {
      * Index: 判断物品是新的还是已存在的
      */
     private async void Submit_Click (object sender, RoutedEventArgs e) {
-      string jsonString = "";
-      string result = "";
-      string picurl = await postPic();
-      if (itemViewModel.SelectIndex == -1) {
-        jsonString = "{\"item\":{" + "\"username\":\"" + userViewModel.CurrentUser.username +
-                     "\",\"itemname\":\"" + Itemname.Text + "\",\"price\":" + int.Parse(Price.Text) +
-                     ",\"description\":\"" + Description.Text + "\",\"leasetimes\":0" + ",\"icon\":\"" + picurl + "\"}}";
-        result = await Post.PostHttp("/item_add", jsonString);
-        
-        JObject data = JObject.Parse(result);
-        string error = (data["status"].ToString() == "error") ? data["errorMsg"].ToString() : "提交成功！\n";
+      string error = "";
+      if (Itemname.Equals("")) { 
+        error += "物品名不能为空!";
         var dialog = new MessageDialog(error);
         await dialog.ShowAsync();
       } else {
-        jsonString = "{\"item\":{" + "\"username\":" + userViewModel.CurrentUser.username +
-                     ",\"itemname\":" + itemViewModel.SelectItem.Itemname + ",\"itemid\":" + itemViewModel.SelectItem.Itemid +
-                     ",\"price\":" + itemViewModel.SelectItem.Price + ",\"description\":" + itemViewModel.SelectItem.Description +
-                     ",\"leasetimes\":0" + ",\"icon\":" + picurl + "}}";
-        result = await Post.PostHttp("/item_update", jsonString);
+        string jsonString = "";
+        string result = "";
+        string picurl = await postPic();
+        if (itemViewModel.SelectIndex == -1) {
+          jsonString = "{\"item\":{" + "\"username\":\"" + userViewModel.CurrentUser.username +
+                       "\",\"itemname\":\"" + Itemname.Text + "\",\"price\":" + float.Parse(Price.Text) +
+                       ",\"description\":\"" + Description.Text + "\",\"leasetimes\":0" + ",\"icon\":\"" + picurl + "\"}}";
+          result = await Post.PostHttp("/item_add", jsonString);
         
-        JObject data = JObject.Parse(result);
-        string error = (data["status"].ToString() == "error") ? data["errorMsg"].ToString() : "提交成功！\n";
-        var dialog = new MessageDialog(error);
-        await dialog.ShowAsync();
+          JObject data = JObject.Parse(result);
+          error = (data["status"].ToString() == "error") ? data["errorMsg"].ToString() : "提交成功！\n";
+          var dialog = new MessageDialog(error);
+          await dialog.ShowAsync();
+        } else {
+          jsonString = "{\"item\":{" + "\"username\":" + userViewModel.CurrentUser.username +
+                       ",\"itemname\":" + itemViewModel.SelectItem.Itemname + ",\"itemid\":" + itemViewModel.SelectItem.Itemid +
+                       ",\"price\":" + itemViewModel.SelectItem.Price + ",\"description\":" + itemViewModel.SelectItem.Description +
+                       ",\"leasetimes\":0" + ",\"icon\":" + picurl + "}}";
+          result = await Post.PostHttp("/item_update", jsonString);
+        
+          JObject data = JObject.Parse(result);
+          error = (data["status"].ToString() == "error") ? data["errorMsg"].ToString() : "提交成功！\n";
+          var dialog = new MessageDialog(error);
+          await dialog.ShowAsync();
+        }
       }
+      
     }
     
     private async Task<string> postPic() { 
@@ -115,6 +124,16 @@ namespace iSharing {
         }
       }
       return result;  
+    }
+
+    private void Price_TextChanged(object sender, TextChangedEventArgs e) {
+      float price;
+      if(!float.TryParse(Price.Text.ToString(), out price)) {
+        Regex number = new Regex("[^0-9]");
+        string after = Price.Text.ToString();
+        after = number.Replace(after, "");
+        Price.Text = after;
+      }
     }
   }
 }
