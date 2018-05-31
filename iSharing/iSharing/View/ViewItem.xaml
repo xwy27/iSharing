@@ -37,14 +37,19 @@ mc:Ignorable="d">
           <DataTemplate x:DataType="md:Item">
             <UserControl>
               <Grid>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="75" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                  <ColumnDefinition Width="100"/>
+                  <ColumnDefinition Width="150"/>
                   <ColumnDefinition Width="*" />
                   <ColumnDefinition Width="80" />
+                  <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Image x:Name="picture" Grid.Column="0" Source="{x:Bind Picture, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="50" Height="30" Margin="10"/>
-                <TextBlock x:Name="itemname" Grid.Column="1" Text="{x:Bind Itemname, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Height="30" Margin="10" />
-                <TextBlock x:Name="price" Grid.Column="2" Text="{x:Bind Price, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center" Height="30" Margin="10"/>
+                <Image x:Name="picture" Grid.Row="0" Grid.Column="0" Source="{x:Bind Picture, Mode=OneWay}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="130" Margin="10"/>
+                <TextBlock x:Name="itemname" Grid.Row="0" Grid.Column="1" Text="{x:Bind Itemname, Mode=OneWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource itemInfo}"/>
+                <TextBlock x:Name="price" Grid.Row="0" Grid.Column="2" Text="{x:Bind Price, Mode=OneWay}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="10" Style="{StaticResource itemInfoSec}"/>
+                <TextBlock Text="元" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Style="{StaticResource itemInfo}" />
               </Grid>
             </UserControl>
           </DataTemplate>
@@ -59,16 +64,22 @@ mc:Ignorable="d">
           <ColumnDefinition Width="75" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-          <RowDefinition Height="40" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="30" />
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock x:Name="Itemname" Text="{x:Bind itemViewModel.SelectItem.Itemname, Mode=OneWay}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" />
-        <TextBlock x:Name="Price" Text="{x:Bind itemViewModel.SelectItem.Price, Mode=OneWay}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" />
+        <TextBlock x:Name="Itemname" Text="{x:Bind itemViewModel.SelectItem.Itemname, Mode=OneWay}" Style="{StaticResource itemInfo}" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" />
+        <TextBlock x:Name="Price" Text="{x:Bind itemViewModel.SelectItem.Price, Mode=OneWay}" Style="{StaticResource itemInfoSec}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" />
+        <TextBlock Text="元" Style="{StaticResource itemInfo}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" />
         <Image x:Name="Picture" Source="{x:Bind itemViewModel.SelectItem.Picture, Mode=OneWay}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" />
-        <TextBlock x:Name="Description" Text="{x:Bind itemViewModel.SelectItem.Description, Mode=OneWay}"  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"/>
-        <TextBlock x:Name="Provider" Text="{x:Bind itemViewModel.SelectItem.Provider, Mode=OneWay}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"/>
+        <TextBlock x:Name="Description" Text="{x:Bind itemViewModel.SelectItem.Description, Mode=OneWay}" Style="{StaticResource itemInfoSec}" TextWrapping="Wrap" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"/>
+        <TextBlock x:Name="Provider" Text="{x:Bind itemViewModel.SelectItem.Provider, Mode=OneWay}" Style="{StaticResource itemInfo}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"/>
+        <TextBlock x:Name="Contact" Text="" Style="{StaticResource itemInfoSec}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" />
+        <AppBarButton x:Name="Share" Icon="Share" Click="Share_Click" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" />
       </Grid>
     </Grid>
   </ScrollViewer>

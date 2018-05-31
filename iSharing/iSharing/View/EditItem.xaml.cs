@@ -25,8 +25,16 @@ namespace iSharing {
     }
     
     protected override void OnNavigatedTo(NavigationEventArgs e) {
+      //如果是新开此页面，将以新建物品方式开启
       if ((String)e.Parameter == "new") {
         itemViewModel.SelectIndex = -1;
+      }
+    }
+    
+    protected override void OnNavigatedFrom(NavigationEventArgs e) {
+      //如果选择了图片但未上传，删除该记录
+      if (ApplicationData.Current.LocalSettings.Values.ContainsKey("ItemPic")) {
+          ApplicationData.Current.LocalSettings.Values.Remove("ItemPic");
       }
     }
     
@@ -59,11 +67,18 @@ namespace iSharing {
      */
     private async void Submit_Click (object sender, RoutedEventArgs e) {
       string error = "";
-      if (Itemname.Equals("")) { 
-        error += "物品名不能为空!";
+      //显示错误内容
+      if (Itemname.Text.Equals("")) { 
+        error += "物品名称不能为空\n";
+      }
+      if (Price.Text.Equals("")) {
+        error += "价格不能为空\n";
+      }
+      if (!error.Equals("")) { 
         var dialog = new MessageDialog(error);
         await dialog.ShowAsync();
       } else {
+        //消息无误可以提交
         string jsonString = "";
         string result = "";
         string picurl = await postPic();
@@ -93,10 +108,14 @@ namespace iSharing {
       
     }
     
+    /** 向服务器提交图片 
+     * 如果在文件选择器中选择了图片则从记录中创建图片文件
+     * 否则提交默认图片
+     */
     private async Task<string> postPic() { 
       string result = "";
       if (ApplicationData.Current.LocalSettings.Values.ContainsKey("ItemPic")) {
-        string fileToken = (string)ApplicationData.Current.LocalSettings.Values["MyToken"];
+        string fileToken = (string)ApplicationData.Current.LocalSettings.Values["ItemPic"];
         if (fileToken != "") {
           StorageFile file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(fileToken);
           /*if (file != null) {
@@ -121,11 +140,21 @@ namespace iSharing {
           result = await Post.PostPhoto(file);
           JObject json = JObject.Parse(result);
           result = json["url"].ToString();
+          ApplicationData.Current.LocalSettings.Values.Remove("ItemPic");
         }
+      } else { 
+        StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/photo.jpg"));
+        result = await Post.PostPhoto(file);
+        JObject json = JObject.Parse(result);
+        result = json["url"].ToString();
       }
       return result;  
     }
-
+    
+    /** TextChanged事件处理器 
+     * 判断价格框中是否输入了非数字的字符
+     * 有则使用正则将其替换掉
+     */
     private void Price_TextChanged(object sender, TextChangedEventArgs e) {
       float price;
       if(!float.TryParse(Price.Text.ToString(), out price)) {

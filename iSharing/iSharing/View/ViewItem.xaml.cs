@@ -44,6 +44,19 @@ namespace iSharing {
         itemViewModel.SelectItem = new Item(data["item"][0]["itemname"].ToString(), float.Parse(data["item"][0]["price"].ToString()),
                                  data["item"][0]["description"].ToString(), image, data["item"][0]["username"].ToString(), int.Parse(data["item"][0]["itemid"].ToString()));
       
+        result = await Post.PostHttp("/user_get", "{ \"user\" : {\"username\":\"" + itemViewModel.SelectItem.Provider + "\"} }");
+        if (result != "") { 
+          data = JObject.Parse(result);
+          string contact = "Email: " + data["user"]["email"].ToString() + "\nTel: " + data["user"]["tel"].ToString();
+          if (!data["user"]["qq"].ToString().Equals("")) { 
+            contact += "\nQQ: " + data["user"]["qq"].ToString();
+          }
+          if (!data["user"]["wechat"].ToString().Equals("")) { 
+            contact += "\nWechat: " + data["user"]["wechat"].ToString();
+          }
+          Contact.Text = contact;
+        }
+
         ItemDetail.Visibility = Visibility.Visible;
         Exit.Visibility = Visibility.Visible;
         ItemList.Visibility = Visibility.Collapsed;
@@ -56,7 +69,7 @@ namespace iSharing {
      */
     private async void LoadMore_Click(object sender, RoutedEventArgs e) {
       int count = itemViewModel.Items.Count;
-      if (count > 0 && count % 20 == 0) {
+      if (count % 20 == 0) {
         await getPage((itemViewModel.Items.Count / 20 + 1));
       }
     }
@@ -105,5 +118,10 @@ namespace iSharing {
       }
       return image;
     }
-  }
+
+        private void Share_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }

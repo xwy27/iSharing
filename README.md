@@ -1,5 +1,16 @@
 # iSharing FrontEnd
 
+## Item
+
+1.**2018.5.31**
+    1. ItemDetail页面增加Provider的联系方式们√
+    2. 改善ItemDetail页面的排版√(分享按钮新增还没改)
+    3. 改善ItemList页面的排版√
+    4. EditItem页面的Price文本框的placeholder(x)
+    5. EditItem页面提交时验证物品名称与价格非空√
+    6. EditItem页面提交时未选择图片则提交默认图片(离开页面与本次提交完时删除选择记录)√
+
+
 ## Login & Signup
 
 1. **2018.5.9-13**
