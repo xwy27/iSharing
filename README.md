@@ -4,11 +4,12 @@
 
 1.**2018.5.31**
     1. ItemDetail页面增加Provider的联系方式们√
-    2. 改善ItemDetail页面的排版√(分享按钮新增还没改)
+    2. 改善ItemDetail页面的排版√(分享按钮新增还没改排版不知道放哪里好随便放的)
     3. 改善ItemList页面的排版√
-    4. EditItem页面的Price文本框的placeholder(x)
+    4. EditItem页面的Price文本框的placeholder(x因为绑定的对象是个float为0，不是空)
     5. EditItem页面提交时验证物品名称与价格非空√
     6. EditItem页面提交时未选择图片则提交默认图片(离开页面与本次提交完时删除选择记录)√
+    7. ItemDetail页面增加分享按钮与其功能，能分享至邮件√
 
 
 ## Login & Signup

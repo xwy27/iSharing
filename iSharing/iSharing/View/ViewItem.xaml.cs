@@ -3,6 +3,7 @@ using iSharing.ViewModel;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -24,6 +25,8 @@ namespace iSharing {
       itemViewModel.Items.Clear();
       //获取第一页物品
       getPage(1);
+      //增加DataRequested事件处理器
+      DataTransferManager.GetForCurrentView().DataRequested += OnDataTransferManager_DataRequested;
     }
     
     /** 点击显示物品详情
@@ -119,9 +122,17 @@ namespace iSharing {
       return image;
     }
 
-        private void Share_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+    private void Share_Click(object sender, RoutedEventArgs e) {
+      DataTransferManager.ShowShareUI();
     }
+
+    private async void OnDataTransferManager_DataRequested(object sender, DataRequestedEventArgs e) {
+      DataPackage package = e.Request.Data;
+      package.SetText(itemViewModel.SelectItem.Description + "\n" + itemViewModel.SelectItem.Provider);
+      package.Properties.Title = itemViewModel.SelectItem.Itemname;
+      string result = await Post.PostHttp("/item_getone", "{\"item\":{" + "\"itemid\":" + itemViewModel.SelectItem.Itemid + "}}");
+      JObject data = JObject.Parse(result);
+      package.SetBitmap(RandomAccessStreamReference.CreateFromUri(new Uri("http://" + data["item"][0]["icon"].ToString())));
+    }
+  }
 }
