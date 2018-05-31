@@ -59,10 +59,12 @@ namespace iSharing {
         }
         // 确保当前窗口处于活动状态
         Window.Current.Activate ();
+        //注册回退事件
         SystemNavigationManager.GetForCurrentView().BackRequested += BackRequested;
+        //是否显示回退按钮
         SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = 
           rootFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
-
+        //标题栏透明化
         CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
         ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor = Colors.White;
         ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor = Color.FromArgb(0, 0, 0, 0);
@@ -103,6 +105,7 @@ namespace iSharing {
 
       //Navigate back if possible, and if the event has not already been handled .
       if (!e.Handled && rootFrame.CanGoBack) {
+        //只有主页面有回退可能，作为登出功能设计
         MessageDialog dialog = new MessageDialog("确认退出当前账号？", "登出");
         dialog.Commands.Add(new UICommand("确定", cmd => { }, "退出"));
         dialog.Commands.Add(new UICommand("取消", cmd => { }));

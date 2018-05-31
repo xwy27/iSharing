@@ -165,13 +165,17 @@
     <Setter Property="FontWeight" Value="Bold"></Setter>
   </Style>
 
-  <Style TargetType="TextBox" x:Key="infoInput">
-    <Setter Property="Width" Value="380"></Setter>
-    <Setter Property="BorderBrush" Value="Gray"></Setter>
-    <Setter Property="BorderThickness" Value="0 0 0 3"></Setter>
-    <Setter Property="TextWrapping" Value="NoWrap"></Setter>
+  <Style TargetType="TextBlock" x:Key="itemInfo">
     <Setter Property="FontSize" Value="18"></Setter>
-    <Setter Property="Background" Value="White"></Setter>
+    <Setter Property="FontWeight" Value="SemiBold"></Setter>
+    <Setter Property="TextAlignment" Value="Left"></Setter>
+    <Setter Property="Margin" Value="10"></Setter>
+  </Style>
+   
+  <Style TargetType="TextBlock" x:Key="itemInfoSec">
+    <Setter Property="FontSize" Value="18"></Setter>
+    <Setter Property="FontWeight" Value="Thin"></Setter>
+    <Setter Property="Margin" Value="0 10"></Setter>
   </Style>
 
 </ResourceDictionary>

@@ -69,6 +69,9 @@ namespace iSharing {
       if (confirmpwd == "") {
         error += "请输入确认密码\n";
       }
+      if (password.Length < 6) {
+        error += "密码长度不低于6\n";
+      }
       if (password.Length > 20) {
         error += "密码长度最大为20\n";
       }

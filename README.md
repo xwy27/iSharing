@@ -248,6 +248,19 @@ MOSAD midterm project: 租赁服务平台
 ### Login & Signup
 # iSharing FrontEnd
 
+## Item
+
+1.**2018.5.31**
+    1. ItemDetail页面增加Provider的联系方式们√
+    2. 改善ItemDetail页面的排版√(分享按钮新增还没改排版不知道放哪里好随便放的)
+    3. 改善ItemList页面的排版√
+    4. EditItem页面的Price文本框的placeholder(因为绑定的对象是个float为0，不是空，改为在框框后面增加单位元)√
+    5. EditItem页面提交时验证物品名称与价格非空√
+    6. EditItem页面提交时未选择图片则提交默认图片(离开页面与本次提交完时删除选择记录)√
+    7. ItemDetail页面增加分享按钮与其功能，能分享至邮件√
+    8. 增加我的物品页面，此页面仅显示本人发布的物品，点击能修改√
+
+
 ## Login & Signup
 
 1. **2018.5.9-13**

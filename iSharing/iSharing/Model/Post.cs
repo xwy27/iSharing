@@ -24,7 +24,7 @@ namespace iSharing.Models {
      * 向服务器发送带有不同 json 的不同请求
      * @param {string} postUrl 请求Url
      * @param {string} json 发送 json 数据
-     * @return {bool} 服务器返回状态为 success 则为 true，否则为 false
+     * @return {string} 服务器返回 json 数据
      */
     public static async Task<string> PostHttp(string url, string json) {
       var httpClient = new HttpClient();
@@ -44,6 +44,11 @@ namespace iSharing.Models {
       return "";
     }
 
+    /**
+     * 向服务器发送图片
+     * @param {StorageFile} file 发送图片
+     * @return {string} 服务器返回图片 url
+     */
     public static async Task<string> PostPhoto(StorageFile file) {
       HttpClient client = new HttpClient();
       var content = new MultipartFormDataContent();
