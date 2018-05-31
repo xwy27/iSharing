@@ -9,7 +9,7 @@ function Item (item) {
   description = item.description;
   leasetimes = item.leasetimes;
   icon = item.icon;
-  itemid = null;
+  itemid = item.itemid;
 };
 
 Item.prototype.save = (callback) => {
@@ -43,7 +43,7 @@ Item.prototype.update = (callback) => {
       return callback(err);
     }
 
-    connection.query('update Item set username=?, itemname=?, price=?, description=?, icon=? , leasetimes=?, where itemid=?',
+    connection.query('update Item set username=?, itemname=?, price=?, description=?, icon=? , leasetimes=? where itemid=?',
       [username, itemname, price, description, icon, leasetimes, itemid],
       (err, results, fields) => {
         connection.release();
