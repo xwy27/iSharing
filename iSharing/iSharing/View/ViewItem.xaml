@@ -76,15 +76,10 @@ mc:Ignorable="d">
         <TextBlock x:Name="Price" Text="{x:Bind itemViewModel.SelectItem.Price, Mode=OneWay}" Style="{StaticResource itemInfoSec}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" />
         <TextBlock Text="元" Style="{StaticResource itemInfo}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Right" />
         <Image x:Name="Picture" Source="{x:Bind itemViewModel.SelectItem.Picture, Mode=OneWay}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" />
-<<<<<<< HEAD
-        <TextBlock x:Name="Description" Text="{x:Bind itemViewModel.SelectItem.Description, Mode=OneWay}"  Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"/>
-        <TextBlock x:Name="Provider" Text="{x:Bind itemViewModel.SelectItem.Provider, Mode=OneWay}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3"/>
-=======
         <TextBlock x:Name="Description" Text="{x:Bind itemViewModel.SelectItem.Description, Mode=OneWay}" Style="{StaticResource itemInfoSec}" TextWrapping="Wrap" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="2"/>
         <TextBlock x:Name="Provider" Text="{x:Bind itemViewModel.SelectItem.Provider, Mode=OneWay}" Style="{StaticResource itemInfo}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4"/>
         <TextBlock x:Name="Contact" Text="" Style="{StaticResource itemInfoSec}" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" />
         <AppBarButton x:Name="Share" Icon="Share" Click="Share_Click" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="6" />
->>>>>>> Frontend
       </Grid>
     </Grid>
   </ScrollViewer>
