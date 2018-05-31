@@ -19,7 +19,7 @@ namespace iSharing {
   public sealed partial class EditItem : Page {
 
     private ItemViewModel itemViewModel = ItemViewModel.GetInstance();
-    private UserViewModel userViewModel = UserViewModel.GetInstance ();
+    private UserViewModel userViewModel = UserViewModel.GetInstance();
     public EditItem () {
       this.InitializeComponent ();
     }
@@ -28,6 +28,9 @@ namespace iSharing {
       //如果是新开此页面，将以新建物品方式开启
       if ((String)e.Parameter == "new") {
         itemViewModel.SelectIndex = -1;
+        Title.Text = "添加物品";
+      } else {
+        Title.Text = "修改物品";
       }
     }
     

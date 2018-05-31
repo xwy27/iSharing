@@ -30,7 +30,7 @@ mc:Ignorable="d">
           <RowDefinition Height="*" />
           <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Text="所有待租赁物品" Grid.Row="0" Style="{StaticResource title}" />
+        <TextBlock x:Name="Title" Text="所有待租赁物品" Grid.Row="0" Style="{StaticResource title}" />
         <ListView x:Name="list" VerticalAlignment="Stretch" BorderThickness="0" Grid.Row="1" ItemClick="ListView_ItemClick" IsItemClickEnabled="True"
           SelectionMode="Single" ItemsSource="{x:Bind itemViewModel.Items, Mode=OneWay}">
         <ListView.ItemTemplate>

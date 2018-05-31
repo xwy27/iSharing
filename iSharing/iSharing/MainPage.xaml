@@ -20,6 +20,7 @@
       <NavigationViewItem x:Uid="ViewItems" Icon="AllApps" Content="浏览物品" Tag="items"/>
       <NavigationViewItem x:Uid="PostItems" Icon="Upload" Content="发布物品" Tag="upload"/>
       <NavigationViewItem x:Uid="MyInfo" Icon="Contact" Content="我的信息" Tag="me"/>
+      <NavigationViewItem x:Uid="MyItem" Icon="Pictures" Content="我的物品" Tag="myItems" />
     </NavigationView.MenuItems>
     <NavigationView.HeaderTemplate>
       <DataTemplate>

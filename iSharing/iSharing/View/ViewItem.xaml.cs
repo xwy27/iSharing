@@ -8,6 +8,7 @@ using Windows.Storage.Streams;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 using Windows.Web.Http;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -17,16 +18,32 @@ namespace iSharing {
   /// 可用于自身或导航至 Frame 内部的空白页。
   /// </summary>
   public sealed partial class ViewItem : Page {
-    private ItemViewModel itemViewModel = ItemViewModel.GetInstance ();
-
+    private ItemViewModel itemViewModel = ItemViewModel.GetInstance();
+    private UserViewModel userViewModel = UserViewModel.GetInstance();
+    //true为个人模式
+    private bool mode = false;
+    
     public ViewItem () {
       this.InitializeComponent ();
       //清空原列表
       itemViewModel.Items.Clear();
-      //获取第一页物品
-      getPage(1);
       //增加DataRequested事件处理器
       DataTransferManager.GetForCurrentView().DataRequested += OnDataTransferManager_DataRequested;
+    }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e) {
+      //如果是个人页面，将以获取个人发布物品方式开启
+      if ((String)e.Parameter == "my") {
+        mode = true;
+      }
+      //获取第一页物品
+      if (mode) {
+        Title.Text = "我的待租赁物品";
+        getOnesPage(1);
+      } else { 
+        Title.Text = "所有待租赁物品";
+        getPage(1);
+      }
     }
     
     /** 点击显示物品详情
@@ -37,6 +54,12 @@ namespace iSharing {
     private async void ListView_ItemClick (object sender, ItemClickEventArgs e) {
       
       itemViewModel.SelectIndex = list.Items.IndexOf (e.ClickedItem);
+      //个人物品的模式
+      if (mode) {
+        Frame.Navigate(typeof(EditItem));
+      }
+
+      //所有物品的模式
       string jsonString = "{\"item\":{" + "\"itemid\":" + itemViewModel.SelectItem.Itemid + "}}";
       string result = await Post.PostHttp("/item_getone", jsonString);
       
@@ -73,9 +96,33 @@ namespace iSharing {
     private async void LoadMore_Click(object sender, RoutedEventArgs e) {
       int count = itemViewModel.Items.Count;
       if (count % 20 == 0) {
-        await getPage((itemViewModel.Items.Count / 20 + 1));
+        if (mode) { 
+          await getOnesPage((itemViewModel.Items.Count / 20 + 1));
+        } else { 
+          await getPage((itemViewModel.Items.Count / 20 + 1));
+        }
       }
     }
+
+    /** 获取某人的指定页
+     * page指定的页数
+     */
+     private async Task<string> getOnesPage(int page) {
+       string jsonString = "{\"pageNumber\":" + page.ToString() + ",\"user\":{\"username\":\""
+                            + userViewModel.CurrentUser.username + "\"}}";
+       string result = await Post.PostHttp("/item_getonesitems", jsonString);
+       if (result != "") {
+        JObject data = JObject.Parse(result);
+        var items = data["items"];
+        foreach (var i in items) { 
+          BitmapImage image = await getPic(i["icon"].ToString());
+          itemViewModel.Items.Add(new Item(i["username"].ToString(), float.Parse(i["price"].ToString()),
+                                       i["description"].ToString(), image, "provider", int.Parse(i["itemid"].ToString())));
+        }
+        return "success";
+      }
+      return "error";
+     }
 
     /** 获取指定页
      * int page指定的页数

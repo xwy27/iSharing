@@ -32,6 +32,10 @@ namespace iSharing {
         case "me":
           ContentFrame.Navigate(typeof(MyInfo));
           break;
+
+        case "myItems":
+          ContentFrame.Navigate(typeof(ViewItem), "my");
+          break;
       }
     }
   }
