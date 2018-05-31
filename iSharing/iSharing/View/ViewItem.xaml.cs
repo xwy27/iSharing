@@ -68,7 +68,7 @@ namespace iSharing {
       
         BitmapImage image = await getPic(data["item"][0]["icon"].ToString());
         itemViewModel.SelectItem = new Item(data["item"][0]["itemname"].ToString(), float.Parse(data["item"][0]["price"].ToString()),
-                                 data["item"][0]["description"].ToString(), image, data["item"][0]["username"].ToString(), int.Parse(data["item"][0]["itemid"].ToString()));
+          data["item"][0]["description"].ToString(), image, data["item"][0]["username"].ToString(), int.Parse(data["item"][0]["itemid"].ToString()));
       
         result = await Post.PostHttp("/user_get", "{ \"user\" : {\"username\":\"" + itemViewModel.SelectItem.Provider + "\"} }");
         if (result != "") { 
@@ -108,8 +108,10 @@ namespace iSharing {
      * page指定的页数
      */
      private async Task<string> getOnesPage(int page) {
-       string jsonString = "{\"pageNumber\":" + page.ToString() + ",\"user\":{\"username\":\""
-                            + userViewModel.CurrentUser.username + "\"}}";
+       string jsonString = "{" +
+            "\"pageNumber\":" + page.ToString() + "," +
+            "\"user\":{\"username\":\"" + userViewModel.CurrentUser.username + "\"}" +
+          "}";
        string result = await Post.PostHttp("/item_getonesitems", jsonString);
        if (result != "") {
         JObject data = JObject.Parse(result);
@@ -117,7 +119,7 @@ namespace iSharing {
         foreach (var i in items) { 
           BitmapImage image = await getPic(i["icon"].ToString());
           itemViewModel.Items.Add(new Item(i["username"].ToString(), float.Parse(i["price"].ToString()),
-                                       i["description"].ToString(), image, "provider", int.Parse(i["itemid"].ToString())));
+            i["description"].ToString(), image, "provider", int.Parse(i["itemid"].ToString())));
         }
         return "success";
       }
@@ -135,8 +137,8 @@ namespace iSharing {
         var items = data["items"];
         foreach (var i in items) { 
           BitmapImage image = await getPic(i["icon"].ToString());
-          itemViewModel.Items.Add(new Item(i["username"].ToString(), float.Parse(i["price"].ToString()),
-                                       i["description"].ToString(), image, "provider", int.Parse(i["itemid"].ToString())));
+          itemViewModel.Items.Add(new Item(i["username"].ToString(), float.Parse(i["price"].ToString()), 
+            i["description"].ToString(), image, "provider", int.Parse(i["itemid"].ToString())));
         }
         return "success";
       }

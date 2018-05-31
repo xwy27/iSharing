@@ -21,6 +21,7 @@ namespace iSharing {
         case "home":
           ContentFrame.Navigate(typeof(Home));
           break;
+
         case "items":
           ContentFrame.Navigate(typeof(ViewItem));
           break;

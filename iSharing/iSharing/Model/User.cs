@@ -17,9 +17,6 @@ namespace iSharing.Models {
     // 用户头像Url
     private string photoUrl;
 
-    // 用户头像
-    private BitmapImage photo;
-
     // 用户名
     public string username;
 
@@ -102,15 +99,6 @@ namespace iSharing.Models {
       set {
         this.photoUrl = value;
         this.NotifyPropertyChanged("PhotoUrl");
-      }
-    }
-
-    // 头像接口
-    public BitmapImage Photo {
-      get { return this.photo; }
-      set {
-        this.photo = value;
-        this.NotifyPropertyChanged ("Photo");
       }
     }
 

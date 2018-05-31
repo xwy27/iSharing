@@ -84,6 +84,9 @@ namespace iSharing {
       string qq = viewModel.CurrentUser.QQ;
       string wechat = viewModel.CurrentUser.Wechat;
 
+      if (viewModel.CurrentUser.Password.Length < 6) {
+        error += "密码长度最小为6\n";
+      }
       if (viewModel.CurrentUser.Password.Length > 20) {
         error += "密码长度最大为20\n";
       }
