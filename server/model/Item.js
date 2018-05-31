@@ -9,7 +9,7 @@ function Item (item) {
   description = item.description;
   leasetimes = item.leasetimes;
   icon = item.icon;
-  itemid = null;
+  itemid = item.itemid;
 };
 
 Item.prototype.save = (callback) => {
@@ -43,7 +43,7 @@ Item.prototype.update = (callback) => {
       return callback(err);
     }
 
-    connection.query('update Item set username=?, itemname=?, price=?, description=?, icon=? , leasetimes=?, where itemid=?',
+    connection.query('update Item set username=?, itemname=?, price=?, description=?, icon=? , leasetimes=? where itemid=?',
       [username, itemname, price, description, icon, leasetimes, itemid],
       (err, results, fields) => {
         connection.release();
@@ -72,6 +72,8 @@ Item.getOne = (itemid, callback) => {
     }
 
     connection.query('select * from Item where itemid = ?', [itemid], (err, results, fields) => {
+      
+      connection.release();
       if (err) {
         return callback(err);
       }
@@ -92,7 +94,9 @@ Item.getList = (pageNumber, callback) => {
       return callback(err);
     }
 
-    connection.query('select * from Item limit ?, ?', [(pageNumber - 1) * 20, (pageNumber - 1) * 20 + 20], (err, results, fields) => {
+    connection.query('select * from Item limit ?, ?', [(pageNumber - 1) * 20, (pageNumber - 1) * 20 + 19], (err, results, fields) => {
+      
+      connection.release();
       if (err) {
         return callback(err);
       }
@@ -114,7 +118,9 @@ Item.getOnesList = (username, pageNumber, callback) => {
       return callback(err);
     }
 
-    connection.query('select * from Item where username = ? limit ?, ?', [username, (pageNumber - 1) * 20, (pageNumber - 1) * 20 + 20], (err, results, fields) => {
+    connection.query('select * from Item where username = ? limit ?, ?', [username, (pageNumber - 1) * 20, (pageNumber - 1) * 20 + 19], (err, results, fields) => {
+      
+      connection.release();
       if (err) {
         return callback(err);
       }
@@ -135,7 +141,9 @@ Item.findList = (itemname, pageNumber, callback) => {
       return callback(err);
     }
 
-    connection.query('select * from Item where itemname like ? limit ?, ?', ['%' + itemname + '%', (pageNumber - 1) * 20, (pageNumber - 1) * 20 + 20], (err, results, fields) => {
+    connection.query('select * from Item where itemname like ? limit ?, ?', ['%' + itemname + '%', (pageNumber - 1) * 20, (pageNumber - 1) * 20 + 19], (err, results, fields) => {
+      
+      connection.release();
       if (err) {
         return callback(err);
       }
