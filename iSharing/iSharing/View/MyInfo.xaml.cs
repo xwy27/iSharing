@@ -111,21 +111,24 @@ namespace iSharing {
         await dialog.ShowAsync();
       } else {
         // post photo
+        StorageFile theFile;
         if (ApplicationData.Current.LocalSettings.Values.ContainsKey("MyToken")) {
-          StorageFile theFile;
           if ((string)ApplicationData.Current.LocalSettings.Values["MyToken"] != "") {
             theFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(
                 (string)ApplicationData.Current.LocalSettings.Values["MyToken"]);
+            ApplicationData.Current.LocalSettings.Values.Remove("MyToken");
           } else {
             theFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/logo.jpg"));
           }
-          if (theFile != null) {
-            var photoResult = await Post.PostPhoto(theFile);
-            // Pharse the json data
-            JObject photoData = JObject.Parse(photoResult);
-            var msg = (photoData["status"].ToString() == "success") ? "上传成功\n" : "上传失败\n";
-            viewModel.CurrentUser.PhotoUrl = photoData["url"].ToString();
-          }
+        } else {
+          theFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/logo.jpg"));
+        }
+        if (theFile != null) {
+          var photoResult = await Post.PostPhoto(theFile);
+          // Pharse the json data
+          JObject photoData = JObject.Parse(photoResult);
+          var msg = (photoData["status"].ToString() == "success") ? "上传成功\n" : "上传失败\n";
+          viewModel.CurrentUser.PhotoUrl = photoData["url"].ToString();
         }
 
         password = Post.EncodePsd(password);

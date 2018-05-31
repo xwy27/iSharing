@@ -114,21 +114,21 @@ namespace iSharing {
      */
     private async Task<string> postPic() { 
       string result = "";
+      StorageFile file;
       if (ApplicationData.Current.LocalSettings.Values.ContainsKey("ItemPic")) {
         string fileToken = (string)ApplicationData.Current.LocalSettings.Values["ItemPic"];
         if (fileToken != "") {
-          StorageFile file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(fileToken);
-          result = await Post.PostPhoto(file);
-          JObject json = JObject.Parse(result);
-          result = json["url"].ToString();
+          file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(fileToken);
           ApplicationData.Current.LocalSettings.Values.Remove("ItemPic");
+        } else {
+          file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/photo.jpg"));
         }
       } else { 
-        StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/photo.jpg"));
-        result = await Post.PostPhoto(file);
-        JObject json = JObject.Parse(result);
-        result = json["url"].ToString();
+        file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/photo.jpg"));
       }
+      result = await Post.PostPhoto(file);
+      JObject json = JObject.Parse(result);
+      result = json["url"].ToString();
       return result;  
     }
     
