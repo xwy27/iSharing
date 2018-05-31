@@ -4,7 +4,7 @@ var pool = mysql.createPool({
   connectionLimit: 10,
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'mosadmidterm',
   database: 'MOSAD_MIDTERM_DB'
 }); // Establish Pooling Connections
 

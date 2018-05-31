@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.ApplicationModel.Core;
+using Windows.UI;
+using Windows.UI.Core;
+using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace iSharing {
@@ -44,6 +39,7 @@ namespace iSharing {
         rootFrame = new Frame ();
 
         rootFrame.NavigationFailed += OnNavigationFailed;
+        rootFrame.Navigated += OnNavigated;
 
         if (e.PreviousExecutionState == ApplicationExecutionState.Terminated) {
           //TODO: 从之前挂起的应用程序加载状态
@@ -58,10 +54,20 @@ namespace iSharing {
           // 当导航堆栈尚未还原时，导航到第一页，
           // 并通过将所需信息作为导航参数传入来配置
           // 参数
-          rootFrame.Navigate (typeof (MainPage), e.Arguments);
+          rootFrame.Navigate (typeof (IndexPage), e.Arguments);
+          //rootFrame.Navigate (typeof (MainPage), e.Arguments);
         }
         // 确保当前窗口处于活动状态
         Window.Current.Activate ();
+        //注册回退事件
+        SystemNavigationManager.GetForCurrentView().BackRequested += BackRequested;
+        //是否显示回退按钮
+        SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = 
+          rootFrame.CanGoBack ? AppViewBackButtonVisibility.Visible : Windows.UI.Core.AppViewBackButtonVisibility.Collapsed;
+        //标题栏透明化
+        CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
+        ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor = Colors.White;
+        ApplicationView.GetForCurrentView().TitleBar.ButtonBackgroundColor = Color.FromArgb(0, 0, 0, 0);
       }
     }
 
@@ -85,6 +91,30 @@ namespace iSharing {
       var deferral = e.SuspendingOperation.GetDeferral ();
       //TODO: 保存应用程序状态并停止任何后台活动
       deferral.Complete ();
+    }
+
+    private void OnNavigated(object sender, NavigationEventArgs e) {
+      //根据页面是否可以返回，在窗口显示返回按钮
+      SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = 
+        ((Frame)sender).CanGoBack ? AppViewBackButtonVisibility.Visible : AppViewBackButtonVisibility.Collapsed;
+    }
+
+    private async void BackRequested(object sender, BackRequestedEventArgs e) {
+      Frame rootFrame = Window.Current.Content as Frame;
+      if (rootFrame == null) return;
+
+      //Navigate back if possible, and if the event has not already been handled .
+      if (!e.Handled && rootFrame.CanGoBack) {
+        //只有主页面有回退可能，作为登出功能设计
+        MessageDialog dialog = new MessageDialog("确认退出当前账号？", "登出");
+        dialog.Commands.Add(new UICommand("确定", cmd => { }, "退出"));
+        dialog.Commands.Add(new UICommand("取消", cmd => { }));
+        IUICommand result = await dialog.ShowAsync();
+        if (result.Id as string == "退出") {
+          e.Handled = true;
+          rootFrame.GoBack();
+        }
+      }
     }
   }
 }

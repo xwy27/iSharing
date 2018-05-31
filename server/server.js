@@ -4,6 +4,16 @@ const app = express();
 var bodyParser = require('body-parser');
 var routes = require('./routes');
 
+var fs = require('fs');
+
+if (!fs.existsSync('public/temp')) {
+  fs.mkdirSync('public/temp');
+}
+
+if (!fs.existsSync('public/Images')) {
+  fs.mkdirSync('public/Images');
+}
+
 app.set('port', process.env.PORT || 8000);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
