@@ -11,6 +11,7 @@ using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 namespace iSharing {
   /// <summary>
@@ -26,6 +27,13 @@ namespace iSharing {
         GetInfo();
       } catch (Exception ex) {
         Debug.WriteLine (ex.Message + ex.StackTrace);
+      }
+    }
+
+    protected override void OnNavigatedFrom(NavigationEventArgs e) {
+      //如果选择了头像但未上传，删除该记录
+      if (ApplicationData.Current.LocalSettings.Values.ContainsKey("MyToken")) {
+        ApplicationData.Current.LocalSettings.Values.Remove("MyToken");
       }
     }
 
@@ -57,11 +65,7 @@ namespace iSharing {
           await img.SetSourceAsync(stream);
           photo.ImageSource = img;
         }
-      } else {
-        //var source = new BitmapImage(new Uri("ms-appx///Assets/logo.jpg"));
-        //photo.ImageSource = source;
       }
-
     }
 
     /**
@@ -108,16 +112,19 @@ namespace iSharing {
       } else {
         // post photo
         if (ApplicationData.Current.LocalSettings.Values.ContainsKey("MyToken")) {
+          StorageFile theFile;
           if ((string)ApplicationData.Current.LocalSettings.Values["MyToken"] != "") {
-            StorageFile theFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(
+            theFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(
                 (string)ApplicationData.Current.LocalSettings.Values["MyToken"]);
-            if (theFile != null) {
-              var photoResult = await Post.PostPhoto(theFile);
-              // Pharse the json data
-              JObject photoData = JObject.Parse(photoResult);
-              var msg = (photoData["status"].ToString() == "success") ? "上传成功\n" : "上传失败\n";
-              viewModel.CurrentUser.PhotoUrl = photoData["url"].ToString();
-            }
+          } else {
+            theFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/logo.jpg"));
+          }
+          if (theFile != null) {
+            var photoResult = await Post.PostPhoto(theFile);
+            // Pharse the json data
+            JObject photoData = JObject.Parse(photoResult);
+            var msg = (photoData["status"].ToString() == "success") ? "上传成功\n" : "上传失败\n";
+            viewModel.CurrentUser.PhotoUrl = photoData["url"].ToString();
           }
         }
 

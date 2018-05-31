@@ -118,25 +118,6 @@ namespace iSharing {
         string fileToken = (string)ApplicationData.Current.LocalSettings.Values["ItemPic"];
         if (fileToken != "") {
           StorageFile file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(fileToken);
-          /*if (file != null) {
-            System.Net.Http.HttpClient http = new System.Net.Http.HttpClient();
-            var content = new MultipartFormDataContent();
-            var stream = await file.OpenReadAsync();
-            var bytes = new byte[stream.Size];
-            using (var dataReader = new DataReader(stream)) { 
-              await dataReader.LoadAsync((uint)stream.Size);
-              dataReader.ReadBytes(bytes);
-            }
-            content.Add(new StreamContent(new MemoryStream(bytes)), "file", "icon.jpg");
-
-            var response = await http.PostAsync(new Uri("http://localhost:8000/image_upload", UriKind.Absolute), content);
-            if (response.IsSuccessStatusCode) {
-              Byte[] responseByte = await response.Content.ReadAsByteArrayAsync();
-              result = Encoding.GetEncoding("UTF-8").GetString(responseByte);
-              JObject json = JObject.Parse(result);
-              result = json["url"].ToString();
-            }
-          }*/
           result = await Post.PostPhoto(file);
           JObject json = JObject.Parse(result);
           result = json["url"].ToString();
