@@ -114,18 +114,14 @@ namespace iSharing {
         await dialog.ShowAsync();
       } else {
         // post photo
-        StorageFile theFile;
+        StorageFile theFile = null;
         if (ApplicationData.Current.LocalSettings.Values.ContainsKey("MyToken")) {
           if ((string)ApplicationData.Current.LocalSettings.Values["MyToken"] != "") {
             theFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(
                 (string)ApplicationData.Current.LocalSettings.Values["MyToken"]);
             ApplicationData.Current.LocalSettings.Values.Remove("MyToken");
-          } else {
-            theFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/logo.jpg"));
-          }
-        } else {
-          theFile = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/logo.jpg"));
-        }
+          } 
+        } 
         if (theFile != null) {
           var photoResult = await Post.PostPhoto(theFile);
           // Pharse the json data

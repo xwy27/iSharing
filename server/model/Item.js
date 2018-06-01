@@ -43,20 +43,38 @@ Item.prototype.update = (callback) => {
       return callback(err);
     }
 
-    connection.query('update Item set username=?, itemname=?, price=?, description=?, icon=? , leasetimes=? where itemid=?',
-      [username, itemname, price, description, icon, leasetimes, itemid],
-      (err, results, fields) => {
-        connection.release();
-        if (err) {
-          return callback(null, {
-            error: true,
-            errorMsg: err
+    if (typeof(icon) === 'undefined' || icon === null) {
+      connection.query('update Item set username=?, itemname=?, price=?, description=?, leasetimes=? where itemid=?',
+        [username, itemname, price, description, leasetimes, itemid],
+        (err, results, fields) => {
+          connection.release();
+          if (err) {
+            return callback(null, {
+              error: true,
+              errorMsg: err
+            });
+          }
+          callback(null, {
+            error: false
           });
-        }
-        callback(null, {
-          error: false
-        });
       });
+    }
+    else {
+      connection.query('update Item set username=?, itemname=?, price=?, description=?, icon=?, leasetimes=? where itemid=?',
+        [username, itemname, price, description, icon, leasetimes, itemid],
+        (err, results, fields) => {
+          connection.release();
+          if (err) {
+            return callback(null, {
+              error: true,
+              errorMsg: err
+            });
+          }
+          callback(null, {
+            error: false
+          });
+      });
+    }
   });
 };
 

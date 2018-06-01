@@ -20,6 +20,8 @@ namespace iSharing {
 
     private ItemViewModel itemViewModel = ItemViewModel.GetInstance();
     private UserViewModel userViewModel = UserViewModel.GetInstance();
+    private string photoUrl;
+
     public EditItem() {
       this.InitializeComponent();
     }
@@ -92,7 +94,7 @@ namespace iSharing {
               "\"price\":" + float.Parse(Price.Text) + "," +
               "\"description\":\"" + Description.Text + "\"," +
               "\"leasetimes\":0" + "," +
-              "\"icon\":\"" + picurl + "\"}" +
+              "\"icon\":\"" + picurl + "\"" + "}" +
             "}";
           result = await Post.PostHttp("/item_add", jsonString);
 
@@ -107,8 +109,8 @@ namespace iSharing {
               "\"itemid\":" + itemViewModel.SelectItem.Itemid + "," +
               "\"price\":" + itemViewModel.SelectItem.Price + "," +
               "\"description\":\"" + itemViewModel.SelectItem.Description + "\"," +
-              "\"leasetimes\":0" + "," +
-              "\"icon\":\"" + picurl + "\"}" +
+              "\"leasetimes\":0" + 
+              (picurl != "" ? "," + "\"icon\":\"" + picurl + "\"}" : "}") +
             "}";
           result = await Post.PostHttp("/item_update", jsonString);
 
@@ -126,22 +128,20 @@ namespace iSharing {
      */
     private async Task<string> postPic() {
       string result = "";
-      StorageFile file;
+      StorageFile file = null;
       if (ApplicationData.Current.LocalSettings.Values.ContainsKey("ItemPic")) {
         string fileToken = (string)ApplicationData.Current.LocalSettings.Values["ItemPic"];
         if (fileToken != "") {
           file = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(fileToken);
           ApplicationData.Current.LocalSettings.Values.Remove("ItemPic");
-        } else {
-          file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/photo.jpg"));
-        }
-      } else {
-        file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/photo.jpg"));
+        } 
       }
-      result = await Post.PostPhoto(file);
-      JObject json = JObject.Parse(result);
-      result = json["url"].ToString();
-      return result;
+      if  (file != null) {
+        result = await Post.PostPhoto(file);
+        JObject json = JObject.Parse(result);
+        result = json["url"].ToString();
+        }
+    return result;
     }
 
     /** TextChanged事件处理器 
