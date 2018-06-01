@@ -118,7 +118,7 @@ namespace iSharing {
         var items = data["items"];
         foreach (var i in items) { 
           BitmapImage image = await getPic(i["icon"].ToString());
-          itemViewModel.Items.Add(new Item(i["username"].ToString(), float.Parse(i["price"].ToString()),
+          itemViewModel.Items.Add(new Item(i["itemname"].ToString(), float.Parse(i["price"].ToString()),
             i["description"].ToString(), image, "provider", int.Parse(i["itemid"].ToString())));
         }
         return "success";
@@ -137,7 +137,7 @@ namespace iSharing {
         var items = data["items"];
         foreach (var i in items) { 
           BitmapImage image = await getPic(i["icon"].ToString());
-          itemViewModel.Items.Add(new Item(i["username"].ToString(), float.Parse(i["price"].ToString()), 
+          itemViewModel.Items.Add(new Item(i["itemname"].ToString(), float.Parse(i["price"].ToString()), 
             i["description"].ToString(), image, "provider", int.Parse(i["itemid"].ToString())));
         }
         return "success";
