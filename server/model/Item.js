@@ -3,16 +3,16 @@ var db = require('./db');
 module.exports = Item;
 
 function Item (item) {
-  username = item.username;
-  itemname = item.itemname;
-  price = item.price;
-  description = item.description;
-  leasetimes = item.leasetimes;
-  icon = item.icon;
-  itemid = item.itemid;
+  this.username = item.username;
+  this.itemname = item.itemname;
+  this.price = item.price;
+  this.description = item.description;
+  this.leasetimes = item.leasetimes;
+  this.icon = item.icon;
+  this.itemid = item.itemid;
 };
 
-Item.prototype.save = (callback) => {
+Item.prototype.save = function (callback) {
   db.getConnection((err, connection) => {
     if (err) {
       return callback(err);
@@ -20,7 +20,7 @@ Item.prototype.save = (callback) => {
 
     connection.query('insert into Item (username, itemname, price, description, leasetimes, icon, itemid)' +
       'values (?, ?, ?, ?, ?, ?, ?)',
-      [username, itemname, price, description, leasetimes, icon, itemid],
+      [this.username, this.itemname, this.price, this.description, this.leasetimes, this.icon, this.itemid],
       (err, results, fields) => {
         connection.release();
         if (err) {
@@ -37,15 +37,17 @@ Item.prototype.save = (callback) => {
   });
 };
 
-Item.prototype.update = (callback) => {
+Item.prototype.update = function (callback) {
   db.getConnection((err, connection) => {
     if (err) {
       return callback(err);
     }
+    
+    console.log(this);
 
-    if (typeof(icon) === 'undefined' || icon === null) {
+    if (typeof(this.icon) === 'undefined' || this.icon === null) {
       connection.query('update Item set username=?, itemname=?, price=?, description=?, leasetimes=? where itemid=?',
-        [username, itemname, price, description, leasetimes, itemid],
+        [this.username, this.itemname, this.price, this.description, this.leasetimes, this.itemid],
         (err, results, fields) => {
           connection.release();
           if (err) {
@@ -61,7 +63,7 @@ Item.prototype.update = (callback) => {
     }
     else {
       connection.query('update Item set username=?, itemname=?, price=?, description=?, icon=?, leasetimes=? where itemid=?',
-        [username, itemname, price, description, icon, leasetimes, itemid],
+        [this.username, this.itemname, this.price, this.description, this.icon, this.leasetimes, this.itemid],
         (err, results, fields) => {
           connection.release();
           if (err) {

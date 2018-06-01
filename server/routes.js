@@ -105,6 +105,8 @@ module.exports = function (app) {
 
     var body = req.body;
 
+    
+
     var username = body.user.username,
       password = body.user.password,
       email = body.user.email,
@@ -112,6 +114,7 @@ module.exports = function (app) {
       qq = body.user.qq,
       wechat = body.user.wechat,
       icon = body.user.icon;
+
 
     var newUser = new User({
       username: username,
@@ -122,6 +125,8 @@ module.exports = function (app) {
       wechat: wechat,
       icon: icon
     });
+
+    console.log(newUser);
 
     newUser.update((err, msg) => {
       if (err) {
@@ -163,8 +168,6 @@ module.exports = function (app) {
   app.post('/item_add', (req, res) => {
     var body = req.body;
 
-    console.log(body.item);
-
     var newItem = new Item({
       username: body.item.username,
       itemid: null,
@@ -174,8 +177,6 @@ module.exports = function (app) {
       leasetimes: body.item.leasetimes,
       icon: body.item.icon
     });
-
-    console.log(newItem);
 
     newItem.save((err, errorMsg)=> {
       if (err) {

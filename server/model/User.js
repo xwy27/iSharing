@@ -81,7 +81,7 @@ User.prototype.update = function (callback) {
       return callback(err);
     }
 
-    if (typeof(icon) === 'undefined') {
+    if (typeof(this.icon) === 'undefined') {
       connection.query('update User set username=?, password=?, email=?, tel=?, qq=?, wechat=? where username=?',
       [this.username, this.password, this.email, this.tel, this.qq, this.wechat, this.username],
       (err, results, fields) => {
